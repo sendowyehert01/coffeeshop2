@@ -11,42 +11,45 @@
                 <div class="navbar-nav ml-auto p-4">
                 <ul class="navbar-nav">
                 <li class="nav-item active">
-                    <a href="/" class="nav-item nav-link">Home</a>
+                    <a href="/" class="nav-item nav-link h6">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a href="/about" class="nav-item nav-link">About</a>
+                    <a href="/about" class="nav-item nav-link h6">About</a>
                 </li>
                 <li class="nav-item">
-                    <a href="/service" class="nav-item nav-link">Service</a>
+                    <a href="/service" class="nav-item nav-link h6">Service</a>
                 </li>
                 <li class="nav-item">
-                    <a href="/menu" class="nav-item nav-link">Menu</a>
+                    <a href="/menu" class="nav-item nav-link h6">Menu</a>
                 </li>
+                <?php if ($_SESSION['user'] ?? false) : ?>
                 <li class="nav-item">
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
+                        <a href="#" class="nav-link dropdown-toggle h6" data-toggle="dropdown">Pages</a>
                         <div class="dropdown-menu text-capitalize">
                             <a href="/reservation" class="dropdown-item">Reservation</a>
                             <a href="/testimonial" class="dropdown-item">Testimonial</a>
                         </div>
                     </div>
                 </li>
+                <?php else : ?>
                 <li class="nav-item">
-                    <a href="/contact" class="nav-link">Contact</a>
+                    <a href="/contact" class="nav-link h6">Contact</a>
                 </li>
+                <?php endif; ?>
                 <?php if ($_SESSION['user'] ?? false) : ?>
                 <li class="nav-item">
                     <form action="/sessions" method="POST">
                         <input type="hidden" name="_method" value="DELETE">
-                        <button class="btn nav-link">Log Out</button>
+                        <button class="btn nav-link h6">Log Out</button>
                     </form>
                 </li>
                 <?php else : ?>
                 <li class="nav-item">
-                    <a href="/register" class="nav-item nav-link">Register</a>
+                    <a href="/register" class="nav-item nav-link h6">Register</a>
                 </li>
                 <li class="nav-item">
-                    <a href="/login" class="nav-item nav-link">Login</a>
+                    <a href="/login" class="nav-item nav-link h6">Login</a>
                 </li>
                 <?php endif; ?>
                 </ul>

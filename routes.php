@@ -20,6 +20,16 @@ $router->get('/contact', 'contact.php');
 // $router->get('/note', 'notes/show.php');
 // $router->delete('/note', 'notes/destroy.php');
 
+$router->get('/admin_dashboard', 'dashboard/index.php')->only('auth');
+$router->get('/admin_dashboard/info', 'dashboard/coffee_info.php')->only('auth');
+$router->get('/admin_dashboard/accounts', 'dashboard/accounts.php')->only('auth');
+$router->get('/admin_dashboard/orders', 'dashboard/orders.php')->only('auth');
+$router->get('/admin_dashboard/inventory', 'dashboard/inventory.php')->only('auth');
+$router->get('/admin_dashboard/products', 'dashboard/products.php')->only('auth');
+$router->get('/admin_dashboard/staffs', 'dashboard/staffs.php')->only('auth');
+$router->get('/admin_dashboard/reports', 'dashboard/reports.php')->only('auth');
+
+$router->get('/pos_frontend', 'pos/index.php')->only('auth');
 
 $router->get('/notes/create', 'notes/create.php');
 $router->post('/notes/store', 'notes/store.php');
