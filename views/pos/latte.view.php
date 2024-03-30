@@ -1,34 +1,9 @@
-<html>
-  <head>
-    <title>POS System</title>
-    <link rel="stylesheet" href="Main.css" />
-  </head>
-
-  <body>
-    <nav>
-      <ul>
-        <li><a href="#">Sales</a></li>
-        <li><a href="#">+</a></li>
-        <li><a href="#">Tunnel</a></li>
-        <li><a href="#">Surf</a></li>
-        <li><a href="#">Parties</a></li>
-      </ul>
-
-      <div class="search">
-        <input type="Search" placeholder="Search..." />
-      </div>
-    </nav>
+<?php require "partials/head.php"; ?>
+<?php require "partials/nav.php"; ?>
 
     <div class="sellables-container">
       <div class="sellables">
-        <div class="categories">
-          <a class="category active" href="Main.html">Brewed Coffee</a>
-          <a class="category" href="Frappe.html">Frappe</a>
-          <a class="category" href="Americano.html">Americano</a>
-          <a class="category" href="Espresso.html">Espresso</a>
-          <a class="category" href="Latte.html">Latte</a>
-          <a class="category" href="Cappuccino.html">Cappuccino</a>
-        </div>
+      <?php require "partials/nav2.php"; ?>
 
         <div class="item-group-wrapper">
           <div class="item-group">
@@ -78,5 +53,5 @@
         </div>
       </div>
     </div>
-  </body>
-</html>
+
+<?php require "partials/foot.php"; ?>

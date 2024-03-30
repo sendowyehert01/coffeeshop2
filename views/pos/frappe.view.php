@@ -3,7 +3,7 @@
 
   <div class="sellables-container">
     <div class="sellables">
-
+      
     <?php require "partials/nav2.php"; ?>
 
       <div class="item-group-wrapper">

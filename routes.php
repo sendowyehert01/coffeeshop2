@@ -1,14 +1,5 @@
 <?php 
 
-// return [
-//   '/' => 'controllers/index.php',
-//   '/about' => 'controllers/about.php',
-//   '/notes' => 'controllers/notes/index.php',
-//   '/note' => 'controllers/notes/show.php',
-//   '/contact' => 'controllers/contact.php',
-//   '/notes/create' => 'controllers/notes/create.php',
-// ];
-
 $router->get('/', 'index.php');
 $router->get('/about', 'about.php');
 $router->get('/service', 'service.php');
@@ -30,12 +21,17 @@ $router->get('/admin_dashboard/staffs', 'dashboard/staffs.php')->only('auth');
 $router->get('/admin_dashboard/reports', 'dashboard/reports.php')->only('auth');
 
 $router->get('/pos_frontend', 'pos/index.php')->only('auth');
+$router->get('/pos_frontend/frappe', 'pos/frappe.php')->only('auth');
+$router->get('/pos_frontend/americano', 'pos/americano.php')->only('auth');
+$router->get('/pos_frontend/expresso', 'pos/expresso.php')->only('auth');
+$router->get('/pos_frontend/latte', 'pos/latte.php')->only('auth');
+$router->get('/pos_frontend/capuccino', 'pos/capuccino.php')->only('auth');
 
-$router->get('/notes/create', 'notes/create.php');
-$router->post('/notes/store', 'notes/store.php');
+// $router->get('/notes/create', 'notes/create.php');
+// $router->post('/notes/store', 'notes/store.php');
 
-$router->get('/notes/edit', 'notes/edit.php');
-$router->patch('/notes', 'notes/update.php');
+// $router->get('/notes/edit', 'notes/edit.php');
+// $router->patch('/notes', 'notes/update.php');
 
 $router->get('/register', 'registration/create.php')->only('guest');
 $router->post('/register', 'registration/store.php')->only('guest');
