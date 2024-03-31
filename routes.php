@@ -17,6 +17,7 @@ $router->get('/admin_dashboard/accounts', 'dashboard/accounts.php')->only('auth'
 $router->get('/admin_dashboard/orders', 'dashboard/orders.php')->only('auth');
 $router->get('/admin_dashboard/inventory', 'dashboard/inventory.php')->only('auth');
 $router->get('/admin_dashboard/products', 'dashboard/products.php')->only('auth');
+$router->post('/admin_dashboard/products', 'dashboard/products.php')->only('auth');
 $router->get('/admin_dashboard/staffs', 'dashboard/staffs.php')->only('auth');
 $router->get('/admin_dashboard/reports', 'dashboard/reports.php')->only('auth');
 

@@ -4,7 +4,7 @@
 $servername = "127.0.0.1";
 $user = "root";
 $pass = "";
-$dbname = "dbcoffee_shop";
+$dbname = "coffeeshop_db";
 
 try {
     $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $user, $pass);
@@ -115,7 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 echo "Error: " . $e->getMessage();
             }
 
-            header("Location: Products.php");
+            header("Location: /admin_dashboard/products");
             exit(); // Ensure to stop script execution after redirection
         } catch (PDOException $e) {
             // Handle the exception/error
@@ -164,7 +164,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 echo "Error: " . $e->getMessage();
             }
 
-            header("Location: Products.php");
+            header("Location: /admin_dashboard/products");
             exit(); // Ensure to stop script execution after redirection
         } catch (PDOException $e) {
             // Handle the exception/error
@@ -274,7 +274,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
 
-                header("Location: " . $_SERVER['PHP_SELF']);
+                header("Location: /admin_dashboard/products");
                 exit(); // Ensure that code stops executing after redirection
             } catch (PDOException $e) {
                 // Handle any potential errors here
@@ -283,7 +283,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             // Redirect to Products.php after successful deletion
-            header("Location: Products.php");
+            header("Location: /admin_dashboard/products");
             exit(); // Ensure that code stops executing after redirection
 
 
@@ -616,7 +616,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 echo "Error: " . $e->getMessage();
             }
 
-            header("Location: Products.php");
+            header("Location: /admin_dashboard/products");
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
@@ -653,7 +653,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             // Redirect to Products.php after successful deletion
-            header("Location: Products.php");
+            header("Location: /admin_dashboard/products");
             exit(); // Ensure that code stops executing after redirection
         } catch (PDOException $e) {
             // Handle any potential errors here
@@ -705,7 +705,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             $statementEditPromo->execute();
-            header("Location: Products.php");
+            header("Location: /admin_dashboard/products");
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
@@ -1040,7 +1040,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="info-box">
                 <button id="closeFormBtn" class="button delete-button">X</button>
                 <h2>Add New Product</h2>
-                <form method="post" action="">
+                <form method="post">
                     <div class="form-group">
                         <label for="new_product">Product Name:</label>
                         <input type="text" class="form-control" name="new_product" placeholder="Product Name:" required>
@@ -1426,7 +1426,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </tr>
                             <tr class="edit-form" id="editForm<?= $products['product_id'] ?>">
                                 <td colspan="6">
-                                    <form method="post" action="">
+                                    <form method="post" action="/admin_dashboard/products">
                                         <input type="hidden" name="edit_product_id" value="<?= $products['product_id'] ?>">
                                         <input type="text" name="edited_product" placeholder="Edit Product Name" value="<?= $products['product_name'] ?>" required>
                                         <textarea name="edited_description" rows="2" cols="50" placeholder="Edit Product Description:" required><?= $products['product_description'] ?></textarea>
