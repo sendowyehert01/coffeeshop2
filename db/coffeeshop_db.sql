@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 31, 2024 at 03:27 AM
+-- Generation Time: Apr 01, 2024 at 04:05 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
 
@@ -376,6 +376,7 @@ CREATE TABLE `tblproducts` (
   `product_name` varchar(255) NOT NULL,
   `product_description` text DEFAULT NULL,
   `price` decimal(10,2) NOT NULL,
+  `image` varchar(255) DEFAULT NULL,
   `status` varchar(20) DEFAULT NULL,
   `category` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -384,25 +385,32 @@ CREATE TABLE `tblproducts` (
 -- Dumping data for table `tblproducts`
 --
 
-INSERT INTO `tblproducts` (`product_id`, `product_name`, `product_description`, `price`, `status`, `category`) VALUES
-(4, 'Cold Brew', 'A nice tasting cold brew that will keep your day awakened', '100.01', 'Available', 'americano'),
-(5, 'Hot Brewed Coffee', 'A coffee that is hot brewed', '120.00', 'Not Available', 'brewed'),
-(7, 'Salted Caramel Cold Brew', 'a salted caramel coffee that is brewed cold', '130.00', NULL, 'brewed'),
-(8, 'Mocha Frappe', 'A coffee that is frapped with mocha', '200.00', NULL, 'frappe'),
-(9, 'Java chip frappe', 'A coffee that is frapped with java chip', '200.00', NULL, 'frappe'),
-(10, 'Vanilla Cream Frappe', 'A coffee that is frapped with vanilla cream', '200.00', NULL, 'frappe'),
-(11, 'Iced Americano', 'A coffee that is americanized with ice', '100.00', NULL, 'americano'),
-(12, 'Iced Americano Con Crema', 'A coffee that is americanized with ice plus additional cream', '100.00', NULL, 'americano'),
-(13, 'Classic Americano', 'A coffee that is americanized classically', '100.00', NULL, 'americano'),
-(14, 'Iced Caramel Macchiato', 'A caramel flavored coffee with ice and macchiato', '100.00', NULL, 'espresso'),
-(15, 'Iced White Chocolate mocha', 'A white chocolate flavored coffee with ice and mocha', '200.00', NULL, 'espresso'),
-(16, 'Espresso Machiato', 'A expressed coffee with macchiato', '200.00', NULL, 'espresso'),
-(17, 'Iced caffe latte', 'a coffee with ice and latted', '130.00', NULL, 'latte'),
-(18, 'Matcha latte', 'a matcha flavored coffee that is latted', '160.00', 'Not Available', 'latte'),
-(19, 'Iced Black Tea Latte', 'a tea flavored coffee with ice, collored black, and latted', '160.00', NULL, 'latte'),
-(20, 'Iced Cappucino', 'a coffee with ice and cappucinized', '160.00', NULL, 'americano'),
-(21, 'Iced Special Cappuccino', 'a coffee with ice and cappucinized but its special', '130.00', NULL, 'cappuccino'),
-(22, 'Iced Mocha Cappuccino', 'a mocha flavored coffee with ice and cappucinized', '160.00', NULL, 'cappuccino');
+INSERT INTO `tblproducts` (`product_id`, `product_name`, `product_description`, `price`, `image`, `status`, `category`) VALUES
+(7, 'Salted Caramel Cold Brew', 'a salted caramel coffee that is brewed cold', '130.00', 'NULL', NULL, 'brewed'),
+(10, 'Vanilla Cream Frappe', 'A coffee that is frapped with vanilla cream', '200.00', NULL, NULL, 'frappe'),
+(11, 'Iced Americano', 'A coffee that is americanized with ice', '100.00', NULL, NULL, 'americano'),
+(12, 'Iced Americano Con Crema', 'A coffee that is americanized with ice plus additional cream', '100.00', NULL, NULL, 'americano'),
+(13, 'Classic Americano', 'A coffee that is americanized classically', '100.00', NULL, NULL, 'americano'),
+(14, 'Iced Caramel Macchiato', 'A caramel flavored coffee with ice and macchiato', '100.00', NULL, NULL, 'espresso'),
+(15, 'Iced White Chocolate mocha', 'A white chocolate flavored coffee with ice and mocha', '200.00', NULL, NULL, 'espresso'),
+(16, 'Espresso Machiato', 'A expressed coffee with macchiato', '200.00', NULL, NULL, 'espresso'),
+(17, 'Iced caffe latte', 'a coffee with ice and latted', '130.00', NULL, NULL, 'latte'),
+(19, 'Iced Black Tea Latte', 'a tea flavored coffee with ice, collored black, and latted', '160.00', NULL, NULL, 'latte'),
+(20, 'Iced Cappucino', 'a coffee with ice and cappucinized', '160.00', NULL, NULL, 'americano'),
+(21, 'Iced Special Cappuccinoo', 'a coffee with ice and cappucinized but its special', '130.00', NULL, NULL, 'cappuccino'),
+(53, 'test', 'test', '111.00', NULL, NULL, 'frappe'),
+(54, 'test', 'testt', '111.00', NULL, NULL, 'brewed'),
+(55, 'DAWD', 'AWDAWD', '111.00', NULL, NULL, 'espresso'),
+(56, 'DAWD', 'AWDAWD', '111.00', NULL, NULL, 'latte'),
+(57, 'daw', 'dawdawd', '111.00', NULL, NULL, 'latte'),
+(58, 'tadwd', 'awdawd', '111.00', 'NULL', NULL, 'latte'),
+(59, 'wdawdawda', 'awdawd', '111.00', 'NULL', NULL, 'cappuccino'),
+(60, 'adwdaw', 'dawdawd', '111.00', 'NULL', NULL, 'latte'),
+(61, 'dawd', 'awdawd', '11.00', 'NULL', NULL, 'latte'),
+(62, 'aw', 'ddawdaw', '11.00', 'NULL', NULL, 'cappuccino'),
+(63, 'adwd', 'awdawd', '11.00', NULL, NULL, 'espresso'),
+(64, 'test', 'test', '111.00', 'NULL', NULL, 'latte'),
+(65, 'dawd', 'awdawd', '111.00', '2222.jpg', NULL, 'latte');
 
 -- --------------------------------------------------------
 
@@ -415,20 +423,6 @@ CREATE TABLE `tblproducts_inventory` (
   `products_id` int(11) NOT NULL,
   `inventory_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `tblproducts_inventory`
---
-
-INSERT INTO `tblproducts_inventory` (`productsInventory_id`, `products_id`, `inventory_id`) VALUES
-(56, 4, 3),
-(57, 4, 5),
-(58, 4, 8),
-(59, 5, 10),
-(60, 5, 12),
-(61, 5, 16),
-(65, 18, 15),
-(66, 18, 5);
 
 -- --------------------------------------------------------
 
@@ -477,7 +471,7 @@ CREATE TABLE `tbluser` (
 INSERT INTO `tbluser` (`id`, `customer_name`, `email`, `username`, `password`, `role`, `date_of_registration`) VALUES
 (9, '', 'sendo@gmail.com', '', '$2y$10$bUqmv08S7XMeHV4DZ2NSDuucG9p7BwM3RtCgpzyHHeC8vTx7dq2am', 'admin', '2024-03-29 12:44:03'),
 (10, 'Sendo Galang', 'odnes@gmail.com', 'sendo123', '$2y$10$ks2bC7Ez3Oc1SqICfCbylu1gg/w28jWoNYnDfo0MYDTGpbYfrVjmO', 'admin', '2024-03-29 12:46:02'),
-(11, 'Jeffel Madula', 'jeffel@example.com', 'jeffel123', '$2y$10$3CJVRwaRV8SJA5sSAd4gaOMmY9eTc4TP9n4pMh.fMhOmpcdABYHMa', 'guest', '2024-03-29 12:49:51'),
+(11, 'Jeffel Madula', 'jeffel@example.com', 'jeffel123', '$2y$10$3CJVRwaRV8SJA5sSAd4gaOMmY9eTc4TP9n4pMh.fMhOmpcdABYHMa', 'admin', '2024-03-29 12:49:51'),
 (12, 'Kurby', 'kurby@gmail.com', 'kurby', '$2y$10$68yUATYNr5N94obo7QyQleqhmQQFbP8tZDexM.V23uLfmYTA8QcAG', 'guest', '2024-03-29 12:53:59'),
 (13, 'Test', 'test@gmail.com', 'test123', '$2y$10$qca.TQG9r3Swm1ukUB09i.rC5bD0nd8i4sTPuxsJolMMH2gXcijXe', 'guest', '2024-03-29 13:31:17'),
 (14, 'Test', 'kurtdiestro@gmail.com', 'test', '$2y$10$sZa1.2aH0aCzEOJyctWICuKMuAEDgVN2Mhu/LHCqDgQdStm2Kwore', 'guest', '2024-03-29 13:32:07');
@@ -801,19 +795,19 @@ ALTER TABLE `tblpayment`
 -- AUTO_INCREMENT for table `tblproducts`
 --
 ALTER TABLE `tblproducts`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
 -- AUTO_INCREMENT for table `tblproducts_inventory`
 --
 ALTER TABLE `tblproducts_inventory`
-  MODIFY `productsInventory_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
+  MODIFY `productsInventory_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
 
 --
 -- AUTO_INCREMENT for table `tblpromo`
 --
 ALTER TABLE `tblpromo`
-  MODIFY `promoid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `promoid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `tbluser`
