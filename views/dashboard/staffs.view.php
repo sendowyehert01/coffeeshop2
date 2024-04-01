@@ -3,7 +3,7 @@
 $servername = "127.0.0.1";
 $username = "root";
 $password = "";
-$dbname = "dbcoffee_shop";
+$dbname = "coffeeshop_db";
 
 // Create a database connection
 $conn = new mysqli($servername, $username, $password, $dbname);

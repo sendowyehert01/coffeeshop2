@@ -340,7 +340,7 @@ try {
             <div class="info-box">
                 <button id="closeFormBtn" class="button delete-button">X</button>
                 <h2>Add New Product</h2>
-                <form method="post">
+                <form method="post" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="new_product">Product Name:</label>
                         <input type="text" class="form-control" name="new_product" placeholder="Product Name:" required>
@@ -353,6 +353,12 @@ try {
                         <label for="new_price">Price: </label>
                         <input type="number" step="0.01" class="form-control" name="new_price" placeholder="Price: 0.00" required>
                     </div>
+                    
+                    <div class="form-group">
+                        <label for="fileToUpload">Image: </label>
+                        <input type="file" name="fileToUpload" id="fileToUpload">
+                    </div>
+
                     <div class="form-group">
                         <label for="new_category">Category: </label>
                         <select name="new_category" class="form-control" id="new_category" required>
@@ -678,6 +684,7 @@ try {
                             <th>Status</th>
                             <th>Category<button type="button" id="categoryProduct" onclick="toggleForm()" style="background-color:transparent; border:none; padding:none;">⚙️</button>
                             </th>
+                            <th>Product Image</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -715,6 +722,11 @@ try {
                                 <td>
                                     <?= $products['category'] ?>
                                 </td>
+
+                                <td>
+                                    <img height="70px" src="/uploads/<?= $products['image'] ?>" alt="">
+                                </td>
+
                                 <td class="action-buttons" style="text-align:center;">
                                     <form method="post" action="" class="button-form">
                                         <input type="hidden" name="edit_product_id" value="<?= $products['product_id'] ?>">

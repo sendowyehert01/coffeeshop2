@@ -21,6 +21,9 @@ $router->post('/admin_dashboard/products', 'dashboard/products.php')->only('auth
 $router->get('/admin_dashboard/staffs', 'dashboard/staffs.php')->only('auth');
 $router->get('/admin_dashboard/reports', 'dashboard/reports.php')->only('auth');
 
+$router->get('/admin_dashboard/reports?get_sales_data', 'dashboard/sales_data.php')->only('auth');
+$router->get('/admin_dashboard/reports?get_inventory_data', 'dashboard/inventory_data.php')->only('auth');
+
 $router->get('/pos_frontend', 'pos/index.php')->only('auth');
 $router->get('/pos_frontend/frappe', 'pos/frappe.php')->only('auth');
 $router->get('/pos_frontend/americano', 'pos/americano.php')->only('auth');
@@ -40,5 +43,7 @@ $router->post('/register', 'registration/store.php')->only('guest');
 $router->get('/login', 'sessions/create.php')->only('guest');
 $router->post('/sessions', 'sessions/store.php')->only('guest');
 $router->delete('/sessions', 'sessions/destroy.php')->only('auth');
+
+$router->get('/test', 'test.php');
 
 ?>  
