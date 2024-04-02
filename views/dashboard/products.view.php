@@ -16,325 +16,14 @@ try {
 <?php require "partials/head.php"; ?>
 <?php require "partials/nav.php"; ?>
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #F5F5DC;
-        }
-
-        table {
-            width: 100%;
-            margin: 20px auto;
-            border-collapse: collapse;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            background-color: #fff;
-            color: #333;
-        }
-
-        th,
-        td {
-            border: 1px solid #ddd;
-            padding: 15px;
-            text-align: left;
-            max-width: 300px;
-            word-wrap: break-word;
-        }
-
-        th {
-            background-color: #4caf50;
-            color: #fff;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-
-        .button {
-            padding: 8px 12px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .button.add-button {
-            background-color: #4CAF50;
-            color: white;
-            margin-right: 5px;
-        }
-
-        .button.edit-button {
-            background-color: #008CBA;
-            color: white;
-        }
-
-        .button.delete-button {
-            background-color: #FF6347;
-            color: white;
-        }
-
-        /* Style sa edit form */
-        .edit-form {
-            display: none;
-            text-align: center;
-        }
-
-        .edit-form input {
-            padding: 10px;
-            margin: 5px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            vertical-align: middle;
-        }
-
-        .edit-form select {
-            padding: 10px;
-            margin: 5px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            vertical-align: middle;
-        }
-
-        .edit-form textarea {
-            padding: 10px;
-            margin: 5px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            vertical-align: middle;
-        }
-
-        .edit-form button {
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-            background-color: #008CBA;
-            color: white;
-            cursor: pointer;
-        }
-
-        .action-buttons {
-            display: flex;
-        }
-
-        .button-form {
-            display: table-row;
-            text-align: center;
-            vertical-align: middle;
-        }
-
-        /*STYLE FORDA OVER LAY FORM */
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            /* Semi-transparent background */
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            overflow: auto;
-            box-sizing: border-box;
-        }
-
-        .overlay-content {
-            max-height: 100%;
-            /* Adjust maximum height as needed */
-            max-width: 100%;
-            /* Adjust maximum width as needed */
-            overflow-y: auto;
-        }
-
-        textarea {
-            resize: none;
-        }
-
-        .dropdown-container {
-            margin-bottom: 10px;
-        }
-
-        /*default table no design */
-        .tableDefault,
-        .tableDefault tr:nth-child(even) {
-            border: none;
-            border-collapse: collapse;
-            border-spacing: 0;
-            width: 100%;
-            /* Add borders for demonstration; you can remove or modify this */
-            padding: 8px;
-            /* Add padding for better readability; you can adjust this */
-            text-align: left;
-            color: black;
-            background-color: transparent;
-            box-shadow: none;
-
-            /* Optional: Alternate background color for headers */
-        }
-    </style>
+    
+    <link rel="stylesheet" href="/Dashboard/css/products.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        // ganon din katulad nung sa add button visible lang yung form nung edit pag pinindot naman yung edit na button 
-        function toggleEditFormy(formId) {
-            var editForm = document.getElementById(formId);
-            editForm.style.display = (editForm.style.display === 'none' || editForm.style.display === '') ? 'table-row' : 'none';
-        }
-        // Insert ingredients
-
-        function toggleIngredientForm(currentProdId) {
-            var ingredientsForm = document.getElementById(currentProdId);
-            ingredientsForm.style.display = (ingredientsForm.style.display === 'none' || ingredientsForm.style.display === '') ? 'flex' : 'none';
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeIngredientForm(currentProdId) {
-            var ingredientsForm = document.getElementById(currentProdId);
-            ingredientsForm.style.display = 'none';
-            document.body.style.overflow = 'visible';
-        }
-
-        //view ingredients details of the product
-        function toggleIngredientsList(currentProdId) {
-            var ingredientsForm = document.getElementById(currentProdId);
-            ingredientsForm.style.display = (ingredientsForm.style.display === 'none' || ingredientsForm.style.display === '') ? 'flex' : 'none';
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeIngredientsList(currentProdId) {
-            var ingredientsForm = document.getElementById(currentProdId);
-            ingredientsForm.style.display = 'none';
-            document.body.style.overflow = 'visible';
-        }
-
-
-        //add drop down to setting ingredients
-        let selectIndex = 1; // Initialize select index counter
-        function addDropdown(dropDownProduct) {
-            const container = document.getElementById(dropDownProduct);
-
-            // Create a new dropdown
-            const dropdownContainer = document.createElement('div');
-            dropdownContainer.classList.add('dropdown-container');
-
-            // Create a new select element
-            const dropdown = document.createElement('select');
-            dropdown.setAttribute('required', '');
-
-            // Set the name for the select element
-            dropdown.name = `select${selectIndex}`;
-
-            // Increment select index for the next dropdown
-            selectIndex++;
-
-            // Create and add the default option
-            const option0 = new Option('select ingredients: ', '');
-            option0.setAttribute('selected', '');
-            option0.setAttribute('disabled', '');
-            dropdown.add(option0);
-
-            // Add options from PHP data (assuming $inventoryData is accessible)
-            <?php foreach ($inventoryData as $row) :
-                echo "option = new Option('" . $row["inventory_item"] . "', '" . $row["inventory_id"] . "');";
-                echo "dropdown.add(option);";
-            endforeach; ?>
-
-            // Create a remove button
-            const removeButton = document.createElement('button');
-            removeButton.textContent = 'Remove';
-            removeButton.onclick = function() {
-                container.removeChild(dropdownContainer);
-            };
-
-            // Append dropdown and remove button to the container
-            dropdownContainer.appendChild(dropdown);
-            dropdownContainer.appendChild(removeButton);
-            container.appendChild(dropdownContainer);
-        }
-
-
-
-        // toggle add products form
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const addForm = document.getElementById('addForm');
-            const overlay = document.getElementById('overlay');
-            const closeFormBtn = document.getElementById('closeFormBtn');
-            const body = document.body;
-            // Initially hide the overlay form
-            overlay.style.display = 'none';
-
-            // Show the overlay form when the button is clicked
-            addForm.addEventListener('click', function() {
-                overlay.style.display = 'flex';
-                body.style.overflow = 'hidden';
-            });
-
-            // Close the overlay form when the close button is clicked
-            closeFormBtn.addEventListener('click', function() {
-                overlay.style.display = 'none';
-                body.style.overflow = 'visible';
-            });
-        });
-
-        //product category settings
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const categoryProduct = document.getElementById('categoryProduct');
-            const overlayCategory = document.getElementById('productCategory');
-            const closeCategoryFormBtn = document.getElementById('closeProductForm');
-            const body = document.body;
-            // Initially hide the overlay form
-            overlayCategory.style.display = 'none';
-
-            // Show the overlay form when the button is clicked
-            categoryProduct.addEventListener('click', function() {
-                overlayCategory.style.display = 'flex';
-                body.style.overflow = 'hidden';
-            });
-
-            // Close the overlay form when the close button is clicked
-            closeCategoryFormBtn.addEventListener('click', function() {
-                overlayCategory.style.display = 'none';
-                body.style.overflow = 'visible';
-            });
-        });
-
-        //toggle row of edit category
-        function toggleEditCategoryForm(categoryId) {
-            var categoryForm = document.getElementById(categoryId);
-            categoryForm.style.display = (categoryForm.style.display === 'none' || categoryForm.style.display === '') ? 'table-row' : 'none';
-        }
-
-        //toggle row of edit category
-        function toggleManagePromoForm(promoId) {
-            var managePromoForm = document.getElementById(promoId);
-            managePromoForm.style.display = (managePromoForm.style.display === 'none' || managePromoForm.style.display === '') ? 'table-row' : 'none';
-        }
-
-        //manage promos button
-        document.addEventListener('DOMContentLoaded', function() {
-            const managePromos = document.getElementById('managePromosBtn');
-            const overlayManagePromos = document.getElementById('managePromos');
-            const closeManagePromosBtn = document.getElementById('closeManagePromosBtn');
-            const body = document.body;
-            // Initially hide the update ingredients form
-            overlayManagePromos.style.display = 'none';
-
-            // Show the overlay form when the button is clicked
-            managePromos.addEventListener('click', function() {
-                overlayManagePromos.style.display = 'flex';
-                body.style.overflow = 'hidden';
-            });
-
-            // Close the overlay form when the close button is clicked
-            closeManagePromosBtn.addEventListener('click', function() {
-                overlayManagePromos.style.display = 'none';
-                body.style.overflow = 'visible';
-            });
-        });
-    </script>
 
     <!--add form overlay-->
+    <?php if (isset($errors['body'])) : ?>
+        <h2 style="text-align: center; color: red;"><?= $errors['body'] ?></h2>
+    <?php endif; ?>
     <div class="overlay" id="overlay">
         <div class="overlay-content">
             <div class="info-box">
@@ -724,7 +413,11 @@ try {
                                 </td>
 
                                 <td>
-                                    <img height="70px" src="/uploads/<?= $products['image'] ?>" alt="">
+                                    <?php if (isset($products['image'])) :?>
+                                        <img height="70px" src="/uploads/<?= $products['image'] ?>" alt="">
+                                    <?php else : ?> 
+                                        <h5 style="text-align:center;">No Image</h5>
+                                    <?php endif; ?>
                                 </td>
 
                                 <td class="action-buttons" style="text-align:center;">
@@ -766,6 +459,167 @@ try {
             <br><br>
         </div>
     </div>
+
+    <script>
+        // ganon din katulad nung sa add button visible lang yung form nung edit pag pinindot naman yung edit na button 
+        function toggleEditFormy(formId) {
+            var editForm = document.getElementById(formId);
+            editForm.style.display = (editForm.style.display === 'none' || editForm.style.display === '') ? 'table-row' : 'none';
+        }
+        // Insert ingredients
+
+        function toggleIngredientForm(currentProdId) {
+            var ingredientsForm = document.getElementById(currentProdId);
+            ingredientsForm.style.display = (ingredientsForm.style.display === 'none' || ingredientsForm.style.display === '') ? 'flex' : 'none';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeIngredientForm(currentProdId) {
+            var ingredientsForm = document.getElementById(currentProdId);
+            ingredientsForm.style.display = 'none';
+            document.body.style.overflow = 'visible';
+        }
+
+        //view ingredients details of the product
+        function toggleIngredientsList(currentProdId) {
+            var ingredientsForm = document.getElementById(currentProdId);
+            ingredientsForm.style.display = (ingredientsForm.style.display === 'none' || ingredientsForm.style.display === '') ? 'flex' : 'none';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeIngredientsList(currentProdId) {
+            var ingredientsForm = document.getElementById(currentProdId);
+            ingredientsForm.style.display = 'none';
+            document.body.style.overflow = 'visible';
+        }
+
+
+        //add drop down to setting ingredients
+        let selectIndex = 1; // Initialize select index counter
+        function addDropdown(dropDownProduct) {
+            const container = document.getElementById(dropDownProduct);
+
+            // Create a new dropdown
+            const dropdownContainer = document.createElement('div');
+            dropdownContainer.classList.add('dropdown-container');
+
+            // Create a new select element
+            const dropdown = document.createElement('select');
+            dropdown.setAttribute('required', '');
+
+            // Set the name for the select element
+            dropdown.name = `select${selectIndex}`;
+
+            // Increment select index for the next dropdown
+            selectIndex++;
+
+            // Create and add the default option
+            const option0 = new Option('select ingredients: ', '');
+            option0.setAttribute('selected', '');
+            option0.setAttribute('disabled', '');
+            dropdown.add(option0);
+
+            // Add options from PHP data (assuming $inventoryData is accessible)
+            <?php foreach ($inventoryData as $row) :
+                echo "option = new Option('" . $row["inventory_item"] . "', '" . $row["inventory_id"] . "');";
+                echo "dropdown.add(option);";
+            endforeach; ?>
+
+            // Create a remove button
+            const removeButton = document.createElement('button');
+            removeButton.textContent = 'Remove';
+            removeButton.onclick = function() {
+                container.removeChild(dropdownContainer);
+            };
+
+            // Append dropdown and remove button to the container
+            dropdownContainer.appendChild(dropdown);
+            dropdownContainer.appendChild(removeButton);
+            container.appendChild(dropdownContainer);
+        }
+
+
+
+        // toggle add products form
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const addForm = document.getElementById('addForm');
+            const overlay = document.getElementById('overlay');
+            const closeFormBtn = document.getElementById('closeFormBtn');
+            const body = document.body;
+            // Initially hide the overlay form
+            overlay.style.display = 'none';
+
+            // Show the overlay form when the button is clicked
+            addForm.addEventListener('click', function() {
+                overlay.style.display = 'flex';
+                body.style.overflow = 'hidden';
+            });
+
+            // Close the overlay form when the close button is clicked
+            closeFormBtn.addEventListener('click', function() {
+                overlay.style.display = 'none';
+                body.style.overflow = 'visible';
+            });
+        });
+
+        //product category settings
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const categoryProduct = document.getElementById('categoryProduct');
+            const overlayCategory = document.getElementById('productCategory');
+            const closeCategoryFormBtn = document.getElementById('closeProductForm');
+            const body = document.body;
+            // Initially hide the overlay form
+            overlayCategory.style.display = 'none';
+
+            // Show the overlay form when the button is clicked
+            categoryProduct.addEventListener('click', function() {
+                overlayCategory.style.display = 'flex';
+                body.style.overflow = 'hidden';
+            });
+
+            // Close the overlay form when the close button is clicked
+            closeCategoryFormBtn.addEventListener('click', function() {
+                overlayCategory.style.display = 'none';
+                body.style.overflow = 'visible';
+            });
+        });
+
+        //toggle row of edit category
+        function toggleEditCategoryForm(categoryId) {
+            var categoryForm = document.getElementById(categoryId);
+            categoryForm.style.display = (categoryForm.style.display === 'none' || categoryForm.style.display === '') ? 'table-row' : 'none';
+        }
+
+        //toggle row of edit category
+        function toggleManagePromoForm(promoId) {
+            var managePromoForm = document.getElementById(promoId);
+            managePromoForm.style.display = (managePromoForm.style.display === 'none' || managePromoForm.style.display === '') ? 'table-row' : 'none';
+        }
+
+        //manage promos button
+        document.addEventListener('DOMContentLoaded', function() {
+            const managePromos = document.getElementById('managePromosBtn');
+            const overlayManagePromos = document.getElementById('managePromos');
+            const closeManagePromosBtn = document.getElementById('closeManagePromosBtn');
+            const body = document.body;
+            // Initially hide the update ingredients form
+            overlayManagePromos.style.display = 'none';
+
+            // Show the overlay form when the button is clicked
+            managePromos.addEventListener('click', function() {
+                overlayManagePromos.style.display = 'flex';
+                body.style.overflow = 'hidden';
+            });
+
+            // Close the overlay form when the close button is clicked
+            closeManagePromosBtn.addEventListener('click', function() {
+                overlayManagePromos.style.display = 'none';
+                body.style.overflow = 'visible';
+            });
+        });
+    </script>
 </body>
 
 </html>

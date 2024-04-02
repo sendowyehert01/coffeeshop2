@@ -82,10 +82,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $newProduct = $_POST['new_product'];
         $newDescription = $_POST['new_productDescription'];
         $newPrice = $_POST['new_price'];
-        $newStatus = $_POST['new_status'];
+        // $newStatus = $_POST['new_status'];
         $newCategory = $_POST['new_category'];
 
         try {
+
+            $errors = [];
 
             $target_dir = "uploads/";
             $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
@@ -93,78 +95,87 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
     
             // Check if image file is a actual image or fake image
-            $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+            $check = @getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+            
             if($check !== false) {
-                echo "File is an image - " . $check["mime"] . ".";
                 $uploadOk = 1;
             } else {
-                echo "File is not an image.";
+                $errors['body'] = "File is not an image.";
                 $uploadOk = 0;
             }
     
             // Check if file already exists
             if (file_exists($target_file)) {
-            echo "Sorry, file already exists.";
-            $uploadOk = 0;
+                $errors['body'] = "Sorry, file already exists.";
+                $uploadOk = 0;
             }
     
             // Check file size
             if ($_FILES["fileToUpload"]["size"] > 50000000) {
-            echo "Sorry, your file is too large.";
-            $uploadOk = 0;
+                $errors['body'] = "Sorry, your file is too large.";
+                $uploadOk = 0;
             }
     
             // Allow certain file formats
             if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
             && $imageFileType != "gif" ) {
-            echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-            $uploadOk = 0;
+                $errors['body'] = "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+                $uploadOk = 0;
             }
     
             // Check if $uploadOk is set to 0 by an error
             if ($uploadOk == 0) {
-            echo "Sorry, your file was not uploaded.";
-            // if everything is ok, try to upload file
+                if (! empty($errors)) {
+                    view('dashboard/products.view.php',[
+                        'inventoryData' => $inventoryData,
+                        'categoryProductData' => $categoryProductData,
+                        'productsData' => $productsData,
+                        'promosData' => $promosData,
+                        'errors' => $errors
+                    ]);
+                  }
+                  exit();
             } else {
             if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
                 $upload_file = basename($_FILES["fileToUpload"]["name"]);
+                $sqlAdd = "INSERT INTO tblproducts (product_name, product_description ,price, image,  category) VALUES (:newProduct, :newDescription, :newPrice, :image, :newCategory)";
+                $statementAdd = $pdo->prepare($sqlAdd);
+                $statementAdd->bindParam(':newProduct', $newProduct);
+                $statementAdd->bindParam(':newDescription', $newDescription);
+                $statementAdd->bindParam(':newPrice', $newPrice);
+                $statementAdd->bindParam(':image', $upload_file);
+                $statementAdd->bindParam(':newCategory', $newCategory);
+                $statementAdd->execute();
+
+                //add user log [added a new product]
+                $DateTime = new DateTime();
+                $philippinesTimeZone = new DateTimeZone('Asia/Manila'); // Set to the Philippines time zone
+                $DateTime->setTimeZone($philippinesTimeZone);
+
+                $currentDateTime = $DateTime->format('Y-m-d H:i:s');
+                $employeeid = $_SESSION['employeeID'];
+                $loginfo = $_SESSION['username'] . ' has added a new product.';
+
+                try {
+                    $sqlLogAdd = "INSERT INTO tbluserlogs (log_datetime, loginfo, employeeid) VALUES (:currentDateTime, :loginfo, :employeeid)";
+                    $statementLogAdd = $pdo->prepare($sqlLogAdd);
+                    $statementLogAdd->bindParam(':loginfo', $loginfo);
+                    $statementLogAdd->bindParam(':employeeid', $employeeid);
+                    $statementLogAdd->bindParam(':currentDateTime', $currentDateTime);
+                    $statementLogAdd->execute();
+                } catch (PDOException $e) {
+                    // Handle the exception/error
+                    echo "Error: " . $e->getMessage();
+                }
+
+                header("Location: /admin_dashboard/products");
+                exit(); // Ensure to stop script execution after redirection
+
             } else {
-                echo "Sorry, there was an error uploading your file.";
+                $errors['body'] = "Sorry, there was an error uploading your file.";
             }
             }
 
-            $sqlAdd = "INSERT INTO tblproducts (product_name, product_description ,price, image,  category) VALUES (:newProduct, :newDescription, :newPrice, :image, :newCategory)";
-            $statementAdd = $pdo->prepare($sqlAdd);
-            $statementAdd->bindParam(':newProduct', $newProduct);
-            $statementAdd->bindParam(':newDescription', $newDescription);
-            $statementAdd->bindParam(':newPrice', $newPrice);
-            $statementAdd->bindParam(':image', $upload_file);
-            $statementAdd->bindParam(':newCategory', $newCategory);
-            $statementAdd->execute();
-
-            //add user log [added a new product]
-            $DateTime = new DateTime();
-            $philippinesTimeZone = new DateTimeZone('Asia/Manila'); // Set to the Philippines time zone
-            $DateTime->setTimeZone($philippinesTimeZone);
-
-            $currentDateTime = $DateTime->format('Y-m-d H:i:s');
-            $employeeid = $_SESSION['employeeID'];
-            $loginfo = $_SESSION['username'] . ' has added a new product.';
-
-            try {
-                $sqlLogAdd = "INSERT INTO tbluserlogs (log_datetime, loginfo, employeeid) VALUES (:currentDateTime, :loginfo, :employeeid)";
-                $statementLogAdd = $pdo->prepare($sqlLogAdd);
-                $statementLogAdd->bindParam(':loginfo', $loginfo);
-                $statementLogAdd->bindParam(':employeeid', $employeeid);
-                $statementLogAdd->bindParam(':currentDateTime', $currentDateTime);
-                $statementLogAdd->execute();
-            } catch (PDOException $e) {
-                // Handle the exception/error
-                echo "Error: " . $e->getMessage();
-            }
-
-            header("Location: /admin_dashboard/products");
-            exit(); // Ensure to stop script execution after redirection
         } catch (PDOException $e) {
             // Handle the exception/error
             echo "Error: " . $e->getMessage();
