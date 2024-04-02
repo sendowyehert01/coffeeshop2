@@ -1,16 +1,7 @@
 <?php
-// Database connection
-$servername = "127.0.0.1";
-$user = "root";
-$pass = "";
-$dbname = "coffeeshop_db";
-
-try {
-    $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $user, $pass);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("Database connection failed: " . $e->getMessage());
-}
+use Core\App;
+use Core\Database;
+$db = App::resolve('Core\Database');
 ?>
 
 <?php require "partials/head.php"; ?>
@@ -170,9 +161,7 @@ try {
                                     $sql = "SELECT * FROM tblproducts_inventory PI 
                                                 JOIN tblInventory I ON PI.inventory_id = I.inventory_id 
                                                 WHERE products_id = $products[product_id]";
-                                    $currentIngredients = $pdo->prepare($sql);
-                                    $currentIngredients->execute();
-                                    $currentIngredientsData = $currentIngredients->fetchAll(PDO::FETCH_ASSOC);
+                                    $currentIngredientsData = $db->query($sql)->get();
                                     ?>
                                     <tr class="tableDefault">
                                         <th class="tableDefault">Ingredients</th>
