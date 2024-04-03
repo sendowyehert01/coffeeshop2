@@ -37,7 +37,7 @@
 
                 <script>
                     // Fetch product data from the backend
-                    fetch('get_products.php')
+                    fetch('/get_products')
                         .then(response => response.json())
                         .then(products => {
                             const productContainer = document.getElementById('product-list');
