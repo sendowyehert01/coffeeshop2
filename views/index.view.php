@@ -295,7 +295,20 @@
             </div>
             <div class="owl-carousel testimonial-carousel">
 
+            <?php foreach ($feedback as $fback) : ?>
 
+                    <div class="testimonial-item">
+                        <div class="d-flex align-items-center mb-3">
+                            <img class="img-fluid" src="img/testimonial-1.jpg" alt="">
+                            <div class="ml-3">
+                                <h4><?= $fback['customer_name'] ?></h4>
+                                <i><?= $fback['username'] ?></i>
+                            </div>
+                        </div>
+                        <p class="m-0"><?= $fback['feedback_desc'] ?></p>
+                    </div>  
+
+            <?php endforeach; ?>
 
             </div>
         </div>

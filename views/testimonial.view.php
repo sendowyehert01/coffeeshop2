@@ -14,6 +14,53 @@
     </div>
     <!-- Page Header End -->
 
+    <?php if (isset($errors['body'])) : ?>
+        <h2 style="text-align: center; color: red;"><?= $errors['body'] ?></h2>
+    <?php endif; ?>
+
+        <!-- Reservation Start -->
+        <div class="container-fluid py-5">
+        <div class="container">
+            <div class="reservation position-relative overlay-top overlay-bottom">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 my-5 my-lg-0">
+                        <div class="p-5">
+                            <div class="mb-4">
+                                <h1 class="display-3 text-primary">Discount Placeholder</h1>
+                                <h1 class="text-white">For Online Reservation</h1>
+                            </div>
+                            <p class="text-white">Book now</p>
+                            <ul class="list-inline text-white m-0">
+                                <li class="py-2"><i class="fa fa-check text-primary mr-3"></i>Mabilis pa sa Fast</li>
+                                <li class="py-2"><i class="fa fa-check text-primary mr-3"></i>Mura pa sa Cheap</li>
+                                <li class="py-2"><i class="fa fa-check text-primary mr-3"></i>Mas maasahan pa sa Reliable</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="text-center p-5" style="background: rgba(51, 33, 29, .8);">
+                            <h1 class="text-white mb-4 mt-5">Submit Feedback</h1>
+                            <form class="mb-5" action="/feedback" method="POST">
+                                <div class="form-group">
+                                    <input name="title" type="text" class="form-control bg-transparent border-primary p-4" placeholder="Title"
+                                        required="required" />
+                                </div>
+                                <div class="form-group">
+                                    <textarea name="feedback_desc" cols="30" rows="10" class="form-control bg-transparent border-primary p-4" placeholder="Enter your feedback. . ."
+                                        required="required"></textarea>
+                                </div>
+                                
+                                <div>
+                                    <button class="btn btn-primary btn-block font-weight-bold py-3" type="submit">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Reservation End -->
 
     <!-- Testimonial Start -->
     <div class="container-fluid py-5">
@@ -23,56 +70,22 @@
                 <h1 class="display-4">Our Clients Say</h1>
             </div>
             <div class="owl-carousel testimonial-carousel">
-                <div class="testimonial-item">
-                    <div class="d-flex align-items-center mb-3">
-                        <img class="img-fluid" src="img/testimonial-1.jpg" alt="">
-                        <div class="ml-3">
-                            <h4>Mr. Wick</h4>
-                            <i>Ex Communicado</i>
+
+            <?php foreach ($feedback as $fback) : ?>
+
+                    <div class="testimonial-item">
+                        <div class="d-flex align-items-center mb-3">
+                            <img class="img-fluid" src="img/testimonial-1.jpg" alt="">
+                            <div class="ml-3">
+                                <h4><?= $fback['customer_name'] ?></h4>
+                                <i><?= $fback['username'] ?></i>
+                            </div>
                         </div>
-                    </div>
-                    <p class="m-0">Yeah, I'll kill them all!</p>
-                </div>
-                <div class="testimonial-item">
-                    <div class="d-flex align-items-center mb-3">
-                        <img class="img-fluid" src="img/testimonial-2.jpg" alt="">
-                        <div class="ml-3">
-                            <h4>Coco Martin</h4>
-                            <i>Batang Quiapo</i>
-                        </div>
-                    </div>
-                    <p class="m-0">Ano papakain ko sa pamilya ko ? Buti nalang may Kape ni Enrique</p>
-                </div>
-                <div class="testimonial-item">
-                    <div class="d-flex align-items-center mb-3">
-                        <img class="img-fluid" src="img/testimonial-3.jpg" alt="">
-                        <div class="ml-3">
-                            <h4>Dominic Toretto</h4>
-                            <i>Mamamangga</i>
-                        </div>
-                    </div>
-                    <p class="m-0">Family, friends I recommend this!</p>
-                </div>
-                <div class="testimonial-item">
-                    <div class="d-flex align-items-center mb-3">
-                        <img class="img-fluid" src="img/testimonial-4.jpg" alt="">
-                        <div class="ml-3">
-                            <h4>Asian Pakboi</h4>
-                            <i>Alagad ni Cherry White</i>
-                        </div>
-                    </div>
-                    <p class="m-0">Sarap ni Cherry White parang yung kape niyo hehe XD!</p>
-                </div>
-                <div class="testimonial-item">
-                    <div class="d-flex align-items-center mb-3">
-                        <img class="img-fluid" src="img/testimonial-5.jpg" alt="">
-                        <div class="ml-3">
-                            <h4>Papa D</h4>
-                            <i>Presidente dati</i>
-                        </div>
-                    </div>
-                    <p class="m-0">Pag di kayo kumain dito papatayin ko kayo!</p>
-                </div>
+                        <p class="m-0"><?= $fback['feedback_desc'] ?></p>
+                    </div>  
+
+            <?php endforeach; ?>
+
             </div>
         </div>
     </div>
