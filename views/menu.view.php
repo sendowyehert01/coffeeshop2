@@ -11,6 +11,35 @@
             align-items: flex-start;
             flex-wrap: wrap;
         }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #F5F5DC;
+        }
+
+        table {
+            width: 100%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            color: #333;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 15px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4caf50;
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
     </style>
 
     <!-- Page Header Start -->
@@ -27,7 +56,6 @@
     </div>
     <!-- Page Header End -->
 
-
     <!-- Menu Start -->
     <div id="product-container" class="container-fluid pt-5">
         <div class="container" id="product-list">
@@ -35,21 +63,43 @@
                 <h4 class="text-primary text-uppercase" style="letter-spacing: 5px;">Menu & Pricing</h4>
                 <h1 class="display-4">Competitive Pricing</h1>
 
+                <div class="dashboard">
+                    <div class="content">
+                            <div>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Product Name</th>
+                                            <th>Product Description</th>
+                                            <th>Price</th>
+                                            <th>Image</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbl_body">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
                 <script>
                     // Fetch product data from the backend
                     fetch('/get_products')
                         .then(response => response.json())
                         .then(products => {
-                            const productContainer = document.getElementById('product-list');
+                            const productContainer = document.getElementById('tbl_body');
 
                             // Loop through the products and display them
                             products.forEach(product => {
-                                const productCard = document.createElement('div');
-                                productCard.className = 'col-lg-4 col-md-6 mb-5';
+                                const productCard = document.createElement('tr');
+                                console.log(product);
+                                // productCard.className = 'col-lg-4 col-md-6 mb-5';
                                 productCard.innerHTML = `
-                                                        <h4><a href ="products_page.html">${product.product_name}</a></h4>
-                                                        <p>${product.product_description}</p>
-                                                        <h5 class="menu-price">${product.price}</h5>
+                                                        <td><a href ="/show_product">${product.product_name}</a></td>
+                                                        <td>${product.product_description}</td>
+                                                        <td>${product.price}</td>
+                                                        <td><img height="100px" src="uploads/${product.image}" alt="${product.product_name}"></td>
                                                     `;
                                 productContainer.appendChild(productCard);
                             });
@@ -57,6 +107,7 @@
                         .catch(error => console.error('Error:', error));
                 </script>
             </div>
+            
 
         </div>
     </div>

@@ -1,15 +1,20 @@
 <?php require 'partials/head.php'; ?>
 <?php require 'partials/nav.php'; ?>
 
-  <main>
-    <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
-      <h1 class="text-2xl-bold">Sorry. Page not found!</h1>
-
-      <p class="mt-4">
-        <a href="/" class="text-blue underline">Go back home</a>
-      </p>
-
+    <!-- Page Header Start -->
+    <div class="container-fluid page-header mb-5 position-relative overlay-bottom">
+        <div class="d-flex flex-column align-items-center justify-content-center pt-0 pt-lg-5" style="min-height: 300px">
+        </div>
     </div>
-  </main>
+    <div>
+      <h1 class="display-4 mb-3 mt-0 mt-lg-5 text-dark text-uppercase text-center">Sorry. Page not found!</h1>
+            <div class="display-5 d-flex mb-lg-5 justify-content-center">
+                <p class="m-0 text-dark"><a class="text-dark" href="/">Home</a></p>
+                <p class="m-0 text-dark px-2">/</p>
+                <p class="m-0 text-dark">About Us</p>
+            </div>
+    </div>
+
+    <!-- Page Header End -->
   
 <?php require 'partials/foot.php'; ?>

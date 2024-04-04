@@ -3,7 +3,7 @@ use Core\App;
 use Core\Database;
 $db = App::resolve('Core\Database');
 
-$sql = "SELECT product_name, product_description, price FROM tblproducts";
+$sql = "SELECT product_name, product_description, price, image FROM tblproducts";
 
 $result = $db->query($sql)->get();
 

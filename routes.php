@@ -4,7 +4,8 @@ $router->get('/', 'index.php');
 $router->get('/about', 'about.php');
 $router->get('/service', 'service.php');
 $router->get('/menu', 'menu.php');
-$router->get('/get_products', 'get_products.php')->only('guest');
+$router->get('/get_products', 'get_products.php');
+$router->get('/show_product', 'product_page.php');
 
 $router->get('/reservation', 'reservation.php')->only('auth');
 $router->get('/testimonial', 'feedback/testimonial.php')->only('auth');
