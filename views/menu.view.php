@@ -1,5 +1,6 @@
 <?php require 'partials/head.php'; ?>
 <?php require 'partials/nav.php'; ?>
+<link href="css/chathead.css" rel="stylesheet">
     
     <!--ChatHead CSS-->
     <link rel="stylesheet" href="chathead.css">
@@ -33,7 +34,7 @@
         }
 
         th {
-            background-color: #4caf50;
+            background-color: #39251e;
             color: #fff;
         }
 
@@ -140,6 +141,34 @@
         </div>
     </div>
     <!-- Chathead section end -->
+
+    <!-- Chatbot section start -->
+        <div class="container">
+            <div class="chat-icon">
+                <i class="fas fa-comment-alt"></i>
+            </div>
+            <div class="chat-box bg-light border rounded" id="chatBot" style="display: none;">
+                <div class="chat-header bg-primary text-white p-2 rounded-top d-flex justify-content-between align-items-center">
+                    <h4 class="m-0">Chat Box</h4>
+                    <button class="close-chat-btn btn btn-link text-white">&times;</button>
+                </div>
+                <div class="chat-body p-3">
+                    <!-- Chat messages will appear here -->
+                </div>
+                <div class="chat-footer bg-light p-2 rounded-bottom">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Type your message...">
+                        <div class="input-group-append">
+                            <button class="send-btn btn btn-primary">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>         
+    <!-- Chatbot section end-->
+
+
+
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
