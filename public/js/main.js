@@ -116,10 +116,10 @@ function handleCloseChatBox() {
     // Show other content
     document.body.style.overflow = 'auto';
 }
-// Add event listener to close button
+
+// Add event listener to close buttons
 document.getElementById('closeChatBox').addEventListener('click', handleCloseChatBox);
-// Add event listener to close button
-document.getElementById('closeChatBox').addEventListener('click', handleCloseChatBox);
+document.querySelector('.close-btn').addEventListener('click', handleCloseChatBox);
 
 
 // Set the position of the chat head
@@ -134,10 +134,38 @@ document.removeEventListener('mousemove', handleMouseMove);
 document.removeEventListener('mouseup', handleMouseUp);
 }
 
+// Function to handle closing the chat box
+function handleCloseChatBox() {
+    chatBox.style.display = 'none';
+    overlay.style.display = 'none'; // Hide overlay
+    // Reset z-index
+    chatBox.style.zIndex = '';
+    // Show other content
+    document.body.style.overflow = 'auto';
+}
+
+// Add event listener to close buttons
+document.getElementById('closeChatBox').addEventListener('click', handleCloseChatBox);
+document.querySelector('.close-btn').addEventListener('click', handleCloseChatBox);
+
 // Add event listener for mouse down event on chat head
 chatHead.addEventListener('mousedown', handleMouseDown);
 
 // Add event listener to toggle chat box visibility when chat head is clicked
 chatHead.addEventListener('click', function() {
 toggleChatBox();
+});
+
+
+
+//chatbot
+
+  // Toggle chat icon
+  $(".chat-icon").click(function(){
+    $("#chatBot").toggle();
+});
+
+// Close chat icon
+$(".close-chat-btn").click(function(){
+    $("#chatBot").hide();
 });
