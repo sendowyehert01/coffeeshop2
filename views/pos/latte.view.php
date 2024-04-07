@@ -6,20 +6,7 @@
       <?php require "partials/nav2.php"; ?>
 
         <div class="item-group-wrapper">
-          <div class="item-group">
-            <a href="#" class="item">Iced Caffe Latte</a>
-            <a href="#" class="item">Matcha Latte</a>
-            <a href="#" class="item">Iced Black Latte</a>
-            <a href="#" class="item">Iced Chai Latte</a>
-            <a href="#" class="item">Iced Green Tea</a>
-            <a href="#" class="item">Iced Mocha Latte</a>
-          </div>
-          <div class="item-group">
-            <a href="#" class="item">KAPE</a>
-            <a href="#" class="item">KAPE</a>
-            <a href="#" class="item">KAPE</a>
-            <a href="#" class="item">KAPE</a>
-            <a href="#" class="item">KAPE</a>
+          <div class="item-group" id="item-data">
           </div>
         </div>
       </div>
@@ -53,5 +40,26 @@
         </div>
       </div>
     </div>
+
+    <script>
+    function displayProducts() {
+    fetch('/pos_frontend/pos_connect')
+        .then(response => response.json())
+        .then(data => {
+          const productList = document.getElementById('item-data');
+          data.forEach(tblproducts => {
+            if (tblproducts.category === 'latte') {
+              const listItem = document.createElement('a');
+              listItem.setAttribute("class", "item");
+              listItem.textContent = `${tblproducts.product_name} - php${tblproducts.price}`;
+              productList.appendChild(listItem);
+            }
+          });
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+    displayProducts();
+    </script>
 
 <?php require "partials/foot.php"; ?>

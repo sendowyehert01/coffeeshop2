@@ -35,6 +35,8 @@ $router->get('/pos_frontend/expresso', 'pos/expresso.php')->only('auth');
 $router->get('/pos_frontend/latte', 'pos/latte.php')->only('auth');
 $router->get('/pos_frontend/capuccino', 'pos/capuccino.php')->only('auth');
 
+$router->get('/pos_frontend/pos_connect', 'pos/pos_connect.php')->only('auth');
+
 // $router->get('/notes/create', 'notes/create.php');
 // $router->post('/notes/store', 'notes/store.php');
 

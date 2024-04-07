@@ -6,17 +6,7 @@
       <?php require "partials/nav2.php"; ?>
 
         <div class="item-group-wrapper">
-          <div class="item-group">
-            <a href="#" class="item">Iced Americano</a>
-            <a href="#" class="item">Con Frappe</a>
-            <a href="#" class="item">Classic Americano</a>
-          </div>
-          <div class="item-group">
-            <a href="#" class="item">KAPE</a>
-            <a href="#" class="item">KAPE</a>
-            <a href="#" class="item">KAPE</a>
-            <a href="#" class="item">KAPE</a>
-            <a href="#" class="item">KAPE</a>
+          <div class="item-group" id="item-data">
           </div>
         </div>
       </div>
@@ -50,4 +40,25 @@
         </div>
       </div>
     </div>
+
+    <script>
+    function displayProducts() {
+    fetch('/pos_frontend/pos_connect')
+        .then(response => response.json())
+        .then(data => {
+          const productList = document.getElementById('item-data');
+          data.forEach(tblproducts => {
+            if (tblproducts.category === 'americano') {
+              const listItem = document.createElement('a');
+              listItem.setAttribute("class", "item");
+              listItem.textContent = `${tblproducts.product_name} - php${tblproducts.price}`;
+              productList.appendChild(listItem);
+            }
+          });
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+    displayProducts();
+    </script>
 <?php require "partials/foot.php"; ?>
