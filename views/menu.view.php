@@ -1,47 +1,10 @@
 <?php require 'partials/head.php'; ?>
 <?php require 'partials/nav.php'; ?>
 <link href="css/chathead.css" rel="stylesheet">
+<link href="css/table.css" rel="stylesheet">
+
     
-    <!--ChatHead CSS-->
-    <link rel="stylesheet" href="chathead.css">
 
-    <style>
-        .auto-format {
-            display: flex;
-            justify-content: space-around;
-            align-items: flex-start;
-            flex-wrap: wrap;
-        }
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #F5F5DC;
-        }
-
-        table {
-            width: 100%;
-            margin: 20px auto;
-            border-collapse: collapse;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            background-color: #fff;
-            color: #333;
-        }
-
-        th,
-        td {
-            border: 1px solid #ddd;
-            padding: 15px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #39251e;
-            color: #fff;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-    </style>
 
     <!-- Page Header Start -->
     <div class="container-fluid page-header mb-5 position-relative overlay-bottom">
@@ -116,59 +79,164 @@
     <!-- Menu End -->
 
     
-    <!-- Chathead section start -->
-    <div id="overlay"></div>
+<!-- Coffee Shop Cart section start -->
+<div id="overlay"></div>
 
-    <div class="container">
-        <!--Chat-Head Starts-->
-        <div class="position-fixed rounded-circle bg-primary text-white p-3 chat-head" id="chatHead">
-            <i class="fas fa-coffee lg"></i>
+<div class="container">
+    <!--Cart-Head Starts-->
+    <div class="position-fixed rounded-circle bg-primary text-white p-3 cart-head" id="cartHead">
+        <i class="fas fa-shopping-cart"></i>
+    </div>
+    <!--Cart-Head End-->
+
+    <!-- Cart (Hidden) -->
+    <div class="position-fixed bottom-0 right-0 m-3 cart bg-light border rounded" id="cart" style="display: none;">
+        <div class="cart-header bg-primary text-white p-2 rounded-top d-flex justify-content-between align-items-center">
+            <h4 class="m-0">Your Cart</h4>
+            <button class="close-btn btn btn-sm btn-light" id="closeCart">&times;</button>
         </div>
-        <!--Chat-Head End-->
-
-        <!-- Chat Box (Hidden) -->
-        <div class="position-fixed bottom-0 right-0 m-3 chat-box bg-light border rounded" id="chatBox" style="display: none;">
-            <div class="chat-header bg-primary text-white p-2 rounded-top d-flex justify-content-between align-items-center">
-                <h4 class="m-0">Chat</h4>
-                <button class="close-btn btn btn-sm btn-light" id="closeChatBox">&times;</button>
-            </div>
-            <div class="chat-body p-3">
-            </div>
-            <div class="chat-footer p-2 bg-light border-top">
-                <input type="text" class="form-control mr-2" placeholder="Type your message...">
-                <button id="sendBtn" class="btn btn-primary">Send</button>
-            </div>
+        <div class="cart-body p-3">
+            <!-- Cart items will be dynamically added here -->
+        </div>
+        <div class="cart-footer p-2 bg-light border-top">
+            <button id="checkoutBtn" class="btn btn-primary">Checkout</button>
         </div>
     </div>
-    <!-- Chathead section end -->
+</div>
+<!-- Coffee Shop Cart section end -->
 
-    <!-- Chatbot section start -->
-        <div class="container">
-            <div class="chat-icon">
-                <i class="fas fa-comment-alt"></i>
-            </div>
-            <div class="chat-box bg-light border rounded" id="chatBot" style="display: none;">
-                <div class="chat-header bg-primary text-white p-2 rounded-top d-flex justify-content-between align-items-center">
-                    <h4 class="m-0">Chat Box</h4>
-                    <button class="close-chat-btn btn btn-link text-white">&times;</button>
-                </div>
-                <div class="chat-body p-3">
-                    <!-- Chat messages will appear here -->
-                </div>
-                <div class="chat-footer bg-light p-2 rounded-bottom">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Type your message...">
-                        <div class="input-group-append">
-                            <button class="send-btn btn btn-primary">Send</button>
-                        </div>
+<!-- Chatbot section start -->
+<div id="overlay"></div>
+
+<div class="container">
+    <div class="position-fixed bottom-0 end-0 p-2">
+        <div class="chat-icon bg-primary text-white rounded-circle d-flex justify-content-center align-items-center" id="toggleChat">
+            <i class="fas fa-comment-alt"></i>
+        </div>
+    </div>
+    <div class="chat-box bg-light border rounded position-fixed bottom-0 end-0" id="chatBot" style="display: none;">
+        <div class="chat-header bg-primary text-white p-2 rounded-top d-flex justify-content-between align-items-center">
+            <h4 class="m-0">Create your own coffee here</h4>
+            <button class="close-chat-btn btn btn-link text-white">&times;</button>
+        </div>
+        <div class="chat-body p-3" id="chatBody">
+            <form id="chatForm">
+                <!-- Step 1: Coffee Category -->
+                <div id="step1">
+                    <p>Select your coffee category:</p>
+                    <div class="mb-3">
+                        <button type="button" class="category-btn btn btn-primary mr-2" value="Americano">Americano</button>
+                        <button type="button" class="category-btn btn btn-primary mr-2" value="Brewed">Brewed</button>
+                        <button type="button" class="category-btn btn btn-primary mr-2" value="Cappucino">Cappucino</button>
+                        <button type="button" class="category-btn btn btn-primary mr-2" value="Espresso">Espresso</button>
+                        <button type="button" class="category-btn btn btn-primary mr-2" value="Frappe">Frappe</button>
+                        <button type="button" class="category-btn btn btn-primary" value="Latte">Latte</button>
+                    </div>
+                    <div class="text-end">
+                        <button type="button" class="next-btn btn btn-primary">Next</button>
                     </div>
                 </div>
-            </div>
-        </div>         
+                <!-- Step 2: Base Coffee -->
+                <div id="step2" style="display: none;">
+                    <p>Select base coffee:</p>
+                    <div class="btn-group">
+                        <button type="button" class="base-btn btn btn-primary mr-2" value="Cold Brew">Cold Brew</button>
+                        <button type="button" class="base-btn btn btn-primary mr-2" value="Ice Americano">Ice Americano</button>
+                        <button type="button" class="base-btn btn btn-primary mr-2" value="Classic Americano">Classic Americano</button>
+                        <button type="button" class="base-btn btn btn-primary mr-2" value="Iced Americano con crema">Iced Americano con crema</button>
+                        <button type="button" class="base-btn btn btn-primary mr-2" value="Iced Cappucino">Iced Cappucino</button>
+                    </div>
+                    <div class="text-end">
+                        <button type="button" class="next-btn btn btn-primary mt-3">Next</button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Size -->
+                <div id="step3" style="display: none;">
+                    <p>Select Size:</p>
+                    <div class="btn-group">
+                        <button type="button" class="size-btn btn btn-primary mr-2" value="Small">Small</button>
+                        <button type="button" class="size-btn btn btn-primary mr-2" value="Medium">Medium</button>
+                        <button type="button" class="size-btn btn btn-primary mr-2" value="Large">Large</button>
+                    </div>
+                    <div class="text-end">
+                        <button type="button" class="next-btn btn btn-primary mt-3">Next</button>
+                    </div>
+                </div>
+
+                <!-- Step 4: Customize Coffee -->
+                <div id="step4" style="display: none;">
+                    <p>Customize your coffee:</p>
+                    <div class="row">
+                        <div class="col-auto">
+                            <label for="ingredient1" class="form-label">Ingredient 1:</label>
+                        </div>
+                        <div class="col">
+                            <div class="input-group custom-input-group">
+                                <button class="btn btn-outline-primary" type="button" id="ingredient1-decrement">-</button>
+                                <input type="text" class="form-control text-center" id="ingredient1" value="0">
+                                <button class="btn btn-outline-primary" type="button" id="ingredient1-increment">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-auto">
+                            <label for="ingredient2" class="form-label">Ingredient 2:</label>
+                        </div>
+                        <div class="col">
+                            <div class="input-group custom-input-group">
+                                <button class="btn btn-outline-primary" type="button" id="ingredient2-decrement">-</button>
+                                <input type="text" class="form-control text-center" id="ingredient2" value="0">
+                                <button class="btn btn-outline-primary" type="button" id="ingredient2-increment">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-auto">
+                            <label for="ingredient3" class="form-label">Ingredient 3:</label>
+                        </div>
+                        <div class="col">
+                            <div class="input-group custom-input-group">
+                                <button class="btn btn-outline-primary" type="button" id="ingredient3-decrement">-</button>
+                                <input type="text" class="form-control text-center" id="ingredient3" value="0">
+                                <button class="btn btn-outline-primary" type="button" id="ingredient3-increment">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-auto">
+                            <label for="ingredient4" class="form-label">Ingredient 4:</label>
+                        </div>
+                        <div class="col">
+                            <div class="input-group custom-input-group">
+                                <button class="btn btn-outline-primary" type="button" id="ingredient4-decrement">-</button>
+                                <input type="text" class="form-control text-center" id="ingredient4" value="0">
+                                <button class="btn btn-outline-primary" type="button" id="ingredient4-increment">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-auto">
+                            <label for="ingredient5" class="form-label">Ingredient 5:</label>
+                        </div>
+                        <div class="col">
+                            <div class="input-group custom-input-group">
+                                <button class="btn btn-outline-primary" type="button" id="ingredient5-decrement">-</button>
+                                <input type="text" class="form-control text-center" id="ingredient5" value="0">
+                                <button class="btn btn-outline-primary" type="button" id="ingredient5-increment">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="submit-btn btn btn-primary mt-3">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
     <!-- Chatbot section end-->
 
 
 
+</div>
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -179,12 +247,15 @@
     <script src="lib/tempusdominus/js/moment.min.js"></script>
     <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
     <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+     <!-- Template Javascript -->
+     <script src="js/main.js"></script>
 
     <!-- Contact Javascript File -->
     <script src="mail/jqBootstrapValidation.min.js"></script>
     <script src="mail/contact.js"></script>
 
-    <!-- Template Javascript -->
-    <script src="js/main.js"></script>
+ 
 
 <?php require 'partials/foot.php'; ?>
