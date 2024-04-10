@@ -1,11 +1,22 @@
+<?php
+use Core\App;
+use Core\Database;
+$db = App::resolve('Core\Database');
+
+$coffee_data = $db->query("SELECT * FROM tblcoffeeshop")->get();
+
+?>
     <!-- Footer Start -->
     <div class="container-fluid footer text-white mt-5 pt-5 px-0 position-relative overlay-top">
         <div class="row mx-0 pt-5 px-sm-3 px-lg-5 mt-4">
             <div class="col-lg-3 col-md-6 mb-5">
                 <h4 class="text-white text-uppercase mb-4" style="letter-spacing: 3px;">Get In Touch</h4>
-                <p><i class="fa fa-map-marker-alt mr-2"></i>Marikina, Philippines</p>
-                <p><i class="fa fa-phone-alt mr-2"></i>09473638226</p>
-                <p class="m-0"><i class="fa fa-envelope mr-2"></i>paoloravinera@icloud.com</p>
+                <?php foreach ($coffee_data as $data) : ?>
+                    <p><i class="fa fa-solid fa-store mr-3"></i><?= $data['shopname'] ?> - <?= $data['branch']?></p>
+                    <p><i class="fa fa-map-marker-alt mr-3"></i><?= $data['address']?></p>
+                    <p><i class="fa fa-phone-alt mr-3"></i><?= $data['contact_no']?></p>
+                    <p class="m-0"><i class="fa fa-envelope mr-3"></i><?= $data['email']?></p>
+                <?php endforeach; ?>
             </div>
             <div class="col-lg-3 col-md-6 mb-5">
                 <h4 class="text-white text-uppercase mb-4" style="letter-spacing: 3px;">Follow Us</h4>
