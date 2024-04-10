@@ -1,3 +1,14 @@
+<?php
+use Core\App;
+use Core\Database;
+$db = App::resolve('Core\Database');
+
+$products = $db->query("SELECT * FROM tblproducts")->get();
+
+?>
+
+<script>
+    
 (function ($) {
     "use strict";
     
@@ -208,7 +219,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     const submitBtn = document.querySelector(".submit-btn");
     submitBtn.addEventListener("click", function(event) {
-        event.preventDefault();
+        document.getElementById('chatForm').submit();
         showConfirmation();
     });
 
@@ -245,3 +256,30 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 });
+
+$(document).ready(function() {
+    $('.category-btn-checkbox').change(function() {
+        if($(this).is(':checked')) {
+            const amer = document.getElementById(this.value);
+            amer.classList.add("selected");
+            $('.category-btn-label').not('#' + this.value).removeClass('selected');
+        }
+    });
+});
+
+
+$(document).ready(function() {
+    $('.category-btn-checkbox').change(function() {
+        if($(this).is(':checked')) {
+            let products = <?= json_encode($products) ?>;
+            console.log(products);
+            if(products[0].category === "Brew"){
+                console.log(this.value);
+                const base_coffee = document.getElementById('base-coffee');
+                console.log(base_coffee);
+            }
+        }
+    });
+});
+</script>
+

@@ -179,7 +179,6 @@ $db = App::resolve('Core\Database');
                                             <?php else : ?>
                                                 <td class="tableDefault">
                                                     <?php echo $currentIngredients['inventory_item']; ?>
-                                                </td>
                                                 <td class="tableDefault">
                                                     <?php echo $currentIngredients['quantity']; ?>
                                                 </td>

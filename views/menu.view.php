@@ -3,6 +3,24 @@
 <link href="css/chathead.css" rel="stylesheet">
 <link href="css/table.css" rel="stylesheet">
 
+
+<style>
+    .category-btn-checkbox {
+        display: none; /* hide the checkbox */
+    }
+
+    .category-btn-label {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007bff; /* primary button color */
+        color: #fff;
+        cursor: pointer;
+    }
+
+    .category-btn-label.selected {
+        background-color: #ffffff; /* secondary button color */
+    }
+</style>
     
 
 
@@ -120,17 +138,30 @@
             <button class="close-chat-btn btn btn-link text-white">&times;</button>
         </div>
         <div class="chat-body p-3" id="chatBody">
-            <form id="chatForm">
+            <form id="chatForm" action="/menu" method="POST">
                 <!-- Step 1: Coffee Category -->
                 <div id="step1">
                     <p>Select your coffee category:</p>
                     <div class="mb-3">
-                        <button type="button" class="category-btn btn btn-primary mr-2" value="Americano">Americano</button>
-                        <button type="button" class="category-btn btn btn-primary mr-2" value="Brewed">Brewed</button>
-                        <button type="button" class="category-btn btn btn-primary mr-2" value="Cappucino">Cappucino</button>
-                        <button type="button" class="category-btn btn btn-primary mr-2" value="Espresso">Espresso</button>
-                        <button type="button" class="category-btn btn btn-primary mr-2" value="Frappe">Frappe</button>
-                        <button type="button" class="category-btn btn btn-primary" value="Latte">Latte</button>
+
+                        <label id="Americano" for="americano" class="category-btn-label">Americano</label>
+                        <input id="americano" type="checkbox" name="category" class="category-btn-checkbox" value="Americano">
+                        
+                        <label id="Brewed" for="brewed" class="category-btn-label">Brewed</label>
+                        <input id="brewed" type="checkbox" name="category" class="category-btn-checkbox" value="Brewed">
+                        
+                        <label id="Capuccino" for="capuccino" class="category-btn-label">Capuccino</label>
+                        <input id="capuccino" type="checkbox" name="category" class="category-btn-checkbox" value="Capuccino">
+
+                        <label id="Espresso" for="espresso" class="category-btn-label">Espresso</label>
+                        <input id="espresso" type="checkbox" name="category" class="category-btn-checkbox" value="Espresso">
+
+                        <label id="Frappe" for="frappe" class="category-btn-label">Frappe</label>
+                        <input id="frappe" type="checkbox" name="category" class="category-btn-checkbox" value="Frappe">
+
+                        <label id="Latte" for="latte" class="category-btn-label">Latte</label>
+                        <input id="latte" type="checkbox" name="category" class="category-btn-checkbox" value="Latte">
+
                     </div>
                     <div class="text-end">
                         <button type="button" class="next-btn btn btn-primary">Next</button>
@@ -139,12 +170,11 @@
                 <!-- Step 2: Base Coffee -->
                 <div id="step2" style="display: none;">
                     <p>Select base coffee:</p>
-                    <div class="btn-group">
-                        <button type="button" class="base-btn btn btn-primary mr-2" value="Cold Brew">Cold Brew</button>
-                        <button type="button" class="base-btn btn btn-primary mr-2" value="Ice Americano">Ice Americano</button>
-                        <button type="button" class="base-btn btn btn-primary mr-2" value="Classic Americano">Classic Americano</button>
-                        <button type="button" class="base-btn btn btn-primary mr-2" value="Iced Americano con crema">Iced Americano con crema</button>
-                        <button type="button" class="base-btn btn btn-primary mr-2" value="Iced Cappucino">Iced Cappucino</button>
+                    <div class="btn-group" id="base-coffee">
+
+                        <label id="Cold Brew" for="cold Brew" class="category-btn-label">Cold Brew</label>
+                        <input id="cold Brew" type="checkbox" name="category" class="category-btn-checkbox" value="Cold Brew">
+
                     </div>
                     <div class="text-end">
                         <button type="button" class="next-btn btn btn-primary mt-3">Next</button>
@@ -155,9 +185,9 @@
                 <div id="step3" style="display: none;">
                     <p>Select Size:</p>
                     <div class="btn-group">
-                        <button type="button" class="size-btn btn btn-primary mr-2" value="Small">Small</button>
-                        <button type="button" class="size-btn btn btn-primary mr-2" value="Medium">Medium</button>
-                        <button type="button" class="size-btn btn btn-primary mr-2" value="Large">Large</button>
+                        <button type="button" name="size" class="size-btn btn btn-primary mr-2" value="Small">Small</button>
+                        <button type="button" name="size" class="size-btn btn btn-primary mr-2" value="Medium">Medium</button>
+                        <button type="button" name="size" class="size-btn btn btn-primary mr-2" value="Large">Large</button>
                     </div>
                     <div class="text-end">
                         <button type="button" class="next-btn btn btn-primary mt-3">Next</button>
@@ -235,7 +265,6 @@
     <!-- Chatbot section end-->
 
 
-
 </div>
 
     <!-- JavaScript Libraries -->
@@ -250,12 +279,11 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
      <!-- Template Javascript -->
-     <script src="js/main.js"></script>
+     <?php require "js/main.php"; ?>
 
     <!-- Contact Javascript File -->
     <script src="mail/jqBootstrapValidation.min.js"></script>
     <script src="mail/contact.js"></script>
 
- 
 
 <?php require 'partials/foot.php'; ?>
