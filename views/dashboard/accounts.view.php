@@ -45,7 +45,7 @@ $customerData = $statement->fetchAll(PDO::FETCH_ASSOC);
         }
 
         th {
-            background-color: #4caf50;
+            background-color: #2473c0;
             color: #fff;
         }
 

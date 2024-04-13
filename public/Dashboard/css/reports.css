@@ -34,15 +34,14 @@ body{
 }
 
 .btn-primary {
-  background-color: #006400; 
-  border-color: #006400; 
+  background-color: #2473c0; 
+  border-color: #5ba1e7; 
 }
 
 
 .btn-primary:hover,
 .btn-primary:focus {
-  background-color: #004d00; 
-  border-color: #004d00; 
+  background-color: #0c4881; 
 }
 
 

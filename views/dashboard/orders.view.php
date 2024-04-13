@@ -166,7 +166,7 @@ if (isset($_POST['unarchive_order'])) {
         }
 
         th {
-            background-color: #4caf50;
+            background-color: #2473c0;
             color: #fff;
         }
 
@@ -202,7 +202,7 @@ if (isset($_POST['unarchive_order'])) {
                     <table class="table table-bordered" id="ordersTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th colspan="6" style="background-color: blue;">
+                                <th colspan="6" style="background-color: #222e5d;">
                                     <h3>Active Orders</h3>
                                 </th>
                             </tr>
@@ -271,7 +271,7 @@ if (isset($_POST['unarchive_order'])) {
                     <table class="table table-bordered" id="ordersTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th colspan="5" style="background-color: green;">
+                                <th colspan="5" style="background-color: #008000;">
                                     <h3>Completed Orders</h3>
                                 </th>
                             </tr>
@@ -335,7 +335,7 @@ if (isset($_POST['unarchive_order'])) {
                     <table class="table table-bordered" id="ordersTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th colspan="6" style="background-color: red;">
+                                <th colspan="6" style="background-color: #800000;">
                                     <h3>Archived Orders</h3>
                                 </th>
                             </tr>

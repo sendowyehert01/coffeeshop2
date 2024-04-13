@@ -22,7 +22,7 @@ td {
 }
 
 th {
-  background-color: #4caf50;
+  background-color: #2473C0;
   color: #fff;
 }
 
@@ -38,13 +38,13 @@ tr:nth-child(even) {
 }
 
 .button.add-button {
-  background-color: #4CAF50;
+  background-color: #2473c0;
   color: white;
   margin-right: 5px;
 }
 
 .button.edit-button {
-  background-color: #008CBA;
+  background-color: green;
   color: white;
 }
 

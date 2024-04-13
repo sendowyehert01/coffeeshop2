@@ -204,7 +204,7 @@ $conn->close();
         }
 
         th {
-            background-color: #4caf50;
+            background-color: #2473C0;
             color: #fff;
         }
 
@@ -225,7 +225,7 @@ $conn->close();
         }
 
         .button.edit-button {
-            background-color: #008CBA;
+            background-color: green;
             color: white;
         }
 

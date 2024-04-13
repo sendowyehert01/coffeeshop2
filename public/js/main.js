@@ -95,29 +95,28 @@ function toggleCart() {
 
 // Function to handle mouse down event on cart head
 function handleMouseDown(event) {
-    // Store the initial mouse position relative to the cart head
+   
     offsetX = event.clientX - cartHead.getBoundingClientRect().left;
     offsetY = event.clientY - cartHead.getBoundingClientRect().top;
 
-    // Add event listeners for mouse move and mouse up events
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseup', handleMouseUp);
 }
 
 // Function to handle mouse move event
 function handleMouseMove(event) {
-    // Calculate new position of the cart head based on mouse position
+
     const x = event.clientX - offsetX;
     const y = event.clientY - offsetY;
 
-    // Set the position of the cart head
+ 
     cartHead.style.left = x + 'px';
     cartHead.style.top = y + 'px';
 }
 
 // Function to handle mouse up event
 function handleMouseUp() {
-    // Remove event listeners for mouse move and mouse up events
+
     document.removeEventListener('mousemove', handleMouseMove);
     document.removeEventListener('mouseup', handleMouseUp);
 }
@@ -125,21 +124,21 @@ function handleMouseUp() {
 // Function to handle closing the cart
 function handleCloseCart() {
     cart.style.display = 'none';
-    overlay.style.display = 'none'; // Hide overlay
-    // Reset z-index
+    overlay.style.display = 'none';
+ 
     cart.style.zIndex = '';
-    // Show other content
+
     document.body.style.overflow = 'auto';
 }
 
-// Add event listener to close buttons
+
 document.getElementById('closeCart').addEventListener('click', handleCloseCart);
 document.querySelector('.close-btn').addEventListener('click', handleCloseCart);
 
-// Add event listener for mouse down event on cart head
+
 cartHead.addEventListener('mousedown', handleMouseDown);
 
-// Add event listener to toggle cart visibility when cart head is clicked
+
 cartHead.addEventListener('click', function() {
     toggleCart();
 });
@@ -165,7 +164,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const overlay = document.getElementById("overlay");
         overlay.style.display = chatBox.style.display === "none" ? "none" : "block";
         if (chatBox.style.display === "none") {
-            resetForm(); // Reset the form if the chatbox is closed
+            resetForm(); 
         }
     }
 
@@ -178,8 +177,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function resetForm() {
         form.reset();
-        currentStep = 0; // Reset to step 1
-        showStep(currentStep);
+        currentStep = 0; 
     }
 
     function showConfirmation() {
@@ -198,7 +196,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     const closeChatBtn = document.querySelector(".close-chat-btn");
     closeChatBtn.addEventListener("click", function() {
-        toggleChatbox(); // Close the chatbox
+        toggleChatbox(); 
     });
 
     const nextButtons = document.querySelectorAll(".next-btn");
