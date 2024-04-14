@@ -3,7 +3,8 @@
 $router->get('/', 'index.php');
 $router->get('/about', 'about.php');
 $router->get('/service', 'service.php');
-$router->get('/menu', 'menu.php');
+$router->get('/menu', 'menu/menu.php');
+$router->post('/menu', 'menu/store.php')->only('auth');
 $router->get('/get_products', 'get_products.php');
 $router->get('/show_product', 'product_page.php');
 

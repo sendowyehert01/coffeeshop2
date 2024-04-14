@@ -1,3 +1,3 @@
-<?php 
+<?php
 
 view('menu.view.php');

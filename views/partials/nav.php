@@ -11,7 +11,9 @@ $coffee_data = $db->query("SELECT * FROM tblcoffeeshop")->get();
     <div class="container-fluid p-0 nav-bar">
         <nav class="navbar navbar-expand-lg bg-none navbar-dark pb-0">
             <a href="index.html" class="navbar-brand px-lg-4 m-0">
-                <h1 class="m-0 display-4 text-uppercase text-white">Coffee ni Wacxyy</h1>
+                    <?php foreach ($coffee_data as $data) : ?>
+                        <h1 class="m-0 display-4 text-uppercase text-white"><?= $data['shopname'] ?></h1>
+                    <?php endforeach; ?>
             </a>
             <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                 <span class="navbar-toggler-icon"></span>
@@ -65,21 +67,5 @@ $coffee_data = $db->query("SELECT * FROM tblcoffeeshop")->get();
                 </div>
             </div>
         </nav>
-
-            <div class="container-fluid text-white">
-                <div class="row px-sm-3 px-lg-5">
-                    <div class="col-lg-3 col-md-6 mb-5">
-                        <?php foreach ($coffee_data as $data) : ?>
-                            <p><i class="fa fa-solid fa-store mr-3"></i><?= $data['shopname'] ?> - <?= $data['branch']?></p>
-                            <p><i class="fa fa-map-marker-alt mr-3"></i><?= $data['address']?></p>
-                            <p><i class="fa fa-phone-alt mr-3"></i><?= $data['contact_no']?></p>
-                            <p class="m-0"><i class="fa fa-envelope mr-3"></i><?= $data['email']?></p>
-                        <?php endforeach; ?>
-                     </div>
-                </div>
-            </div>
-
-
-
     </div>
     <!-- Navbar End -->
