@@ -1,3 +1,14 @@
+<?php
+use Core\App;
+use Core\Database;
+$db = App::resolve('Core\Database');
+
+$products = $db->query("SELECT * FROM tblproducts")->get();
+
+?>
+
+<script>
+    
 (function ($) {
     "use strict";
     
@@ -76,82 +87,76 @@ const overlay = document.getElementById('overlay');
 let offsetX = 0;
 let offsetY = 0;
 
-let chatboxOpen = false;
-let cartOpen = false;
 
 function toggleCart() {
-    if (!chatboxOpen) { // Check if chatbox is not open
-        cart.style.display = cart.style.display === 'block' ? 'none' : 'block';
-        overlay.style.display = cart.style.display === 'block' ? 'block' : 'none'; // Toggle overlay
-        cartOpen = !cartOpen;
-        if (cart.style.display === 'block') {
-            cart.style.zIndex = 9999;
-            document.body.style.overflow = 'hidden';
-        } else {
-            cart.style.zIndex = '';
-            document.body.style.overflow = 'auto';
-        }
+    cart.style.display = cart.style.display === 'block' ? 'none' : 'block';
+    overlay.style.display = cart.style.display === 'block' ? 'block' : 'none'; // Toggle overlay
+    if (cart.style.display === 'block') {
+        // Bring cart to front
+        cart.style.zIndex = 9999;
+        // Hide other content
+        document.body.style.overflow = 'hidden';
+    } else {
+        // Reset z-index
+        cart.style.zIndex = '';
+        // Show other content
+        document.body.style.overflow = 'auto';
     }
 }
 
-function toggleChatbox() {
-    if (!cartOpen) { // Check if cart is not open
-        const chatBox = document.getElementById("chatBot");
-        chatBox.style.display = chatBox.style.display === "none" ? "block" : "none";
-        const overlay = document.getElementById("overlay");
-        overlay.style.display = chatBox.style.display === "none" ? "none" : "block";
-        chatboxOpen = !chatboxOpen;
-        if (chatBox.style.display === "none") {
-            resetForm(); // Reset form if chatbox is closed
-        }
-    }
-}
-
-function handleCloseCart() {
-    cart.style.display = 'none';
-    overlay.style.display = 'none';
-    cartOpen = false; // Reset cart open state
-    cart.style.zIndex = '';
-    document.body.style.overflow = 'auto';
-}
-
+// Function to handle mouse down event on cart head
 function handleMouseDown(event) {
+    // Store the initial mouse position relative to the cart head
     offsetX = event.clientX - cartHead.getBoundingClientRect().left;
     offsetY = event.clientY - cartHead.getBoundingClientRect().top;
 
+    // Add event listeners for mouse move and mouse up events
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseup', handleMouseUp);
 }
 
+// Function to handle mouse move event
 function handleMouseMove(event) {
+    // Calculate new position of the cart head based on mouse position
     const x = event.clientX - offsetX;
     const y = event.clientY - offsetY;
 
+    // Set the position of the cart head
     cartHead.style.left = x + 'px';
     cartHead.style.top = y + 'px';
 }
 
+// Function to handle mouse up event
 function handleMouseUp() {
+    // Remove event listeners for mouse move and mouse up events
     document.removeEventListener('mousemove', handleMouseMove);
     document.removeEventListener('mouseup', handleMouseUp);
 }
 
+// Function to handle closing the cart
+function handleCloseCart() {
+    cart.style.display = 'none';
+    overlay.style.display = 'none'; // Hide overlay
+    // Reset z-index
+    cart.style.zIndex = '';
+    // Show other content
+    document.body.style.overflow = 'auto';
+}
+
+// Add event listener to close buttons
 document.getElementById('closeCart').addEventListener('click', handleCloseCart);
 document.querySelector('.close-btn').addEventListener('click', handleCloseCart);
 
+// Add event listener for mouse down event on cart head
 cartHead.addEventListener('mousedown', handleMouseDown);
 
+// Add event listener to toggle cart visibility when cart head is clicked
 cartHead.addEventListener('click', function() {
     toggleCart();
 });
 
-const toggleChat = document.getElementById("toggleChat");
-toggleChat.addEventListener("click", toggleChatbox);
 
-const closeChatBtn = document.querySelector(".close-chat-btn");
-closeChatBtn.addEventListener("click", function() {
-    toggleChatbox();
-});
+
 
 //chatbot form logic
 document.addEventListener("DOMContentLoaded", function() {
@@ -165,6 +170,16 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
+    function toggleChatbox() {
+        const chatBox = document.getElementById("chatBot");
+        chatBox.style.display = chatBox.style.display === "none" ? "block" : "none";
+        const overlay = document.getElementById("overlay");
+        overlay.style.display = chatBox.style.display === "none" ? "none" : "block";
+        if (chatBox.style.display === "none") {
+            resetForm(); // Reset the form if the chatbox is closed
+        }
+    }
+
     function handleNext() {
         currentStep++;
         if (currentStep < steps.length) {
@@ -174,7 +189,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function resetForm() {
         form.reset();
-        currentStep = 0; 
+        currentStep = 0; // Reset to step 1
         showStep(currentStep);
     }
 
@@ -189,6 +204,14 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
+    const toggleChat = document.getElementById("toggleChat");
+    toggleChat.addEventListener("click", toggleChatbox);
+
+    const closeChatBtn = document.querySelector(".close-chat-btn");
+    closeChatBtn.addEventListener("click", function() {
+        toggleChatbox(); // Close the chatbox
+    });
+
     const nextButtons = document.querySelectorAll(".next-btn");
     nextButtons.forEach(button => {
         button.addEventListener("click", handleNext);
@@ -196,7 +219,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     const submitBtn = document.querySelector(".submit-btn");
     submitBtn.addEventListener("click", function(event) {
-        event.preventDefault();
+        document.getElementById('chatForm').submit();
         showConfirmation();
     });
 
@@ -233,3 +256,29 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 });
+
+$(document).ready(function() {
+    $('.category-btn-checkbox').change(function() {
+        if($(this).is(':checked')) {
+            const amer = document.getElementById(this.value);
+            amer.classList.add("selected");
+            $('.category-btn-label').not('#' + this.value).removeClass('selected');
+        }
+    });
+});
+
+
+$(document).ready(function() {
+    $('.category-btn-checkbox').change(function() {
+        if($(this).is(':checked')) {
+            let products = <?= json_encode($products) ?>;
+            console.log(products);
+            if(products[0].category === "Brew"){
+                console.log(this.value);
+                const base_coffee = document.getElementById('base-coffee');
+                console.log(base_coffee);
+            }
+        }
+    });
+});
+</script>
