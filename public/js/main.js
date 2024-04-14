@@ -76,26 +76,46 @@ const overlay = document.getElementById('overlay');
 let offsetX = 0;
 let offsetY = 0;
 
+let chatboxOpen = false;
+let cartOpen = false;
 
 function toggleCart() {
-    cart.style.display = cart.style.display === 'block' ? 'none' : 'block';
-    overlay.style.display = cart.style.display === 'block' ? 'block' : 'none'; // Toggle overlay
-    if (cart.style.display === 'block') {
-        // Bring cart to front
-        cart.style.zIndex = 9999;
-        // Hide other content
-        document.body.style.overflow = 'hidden';
-    } else {
-        // Reset z-index
-        cart.style.zIndex = '';
-        // Show other content
-        document.body.style.overflow = 'auto';
+    if (!chatboxOpen) { // Check if chatbox is not open
+        cart.style.display = cart.style.display === 'block' ? 'none' : 'block';
+        overlay.style.display = cart.style.display === 'block' ? 'block' : 'none'; // Toggle overlay
+        cartOpen = !cartOpen;
+        if (cart.style.display === 'block') {
+            cart.style.zIndex = 9999;
+            document.body.style.overflow = 'hidden';
+        } else {
+            cart.style.zIndex = '';
+            document.body.style.overflow = 'auto';
+        }
     }
 }
 
-// Function to handle mouse down event on cart head
+function toggleChatbox() {
+    if (!cartOpen) { // Check if cart is not open
+        const chatBox = document.getElementById("chatBot");
+        chatBox.style.display = chatBox.style.display === "none" ? "block" : "none";
+        const overlay = document.getElementById("overlay");
+        overlay.style.display = chatBox.style.display === "none" ? "none" : "block";
+        chatboxOpen = !chatboxOpen;
+        if (chatBox.style.display === "none") {
+            resetForm(); // Reset form if chatbox is closed
+        }
+    }
+}
+
+function handleCloseCart() {
+    cart.style.display = 'none';
+    overlay.style.display = 'none';
+    cartOpen = false; // Reset cart open state
+    cart.style.zIndex = '';
+    document.body.style.overflow = 'auto';
+}
+
 function handleMouseDown(event) {
-   
     offsetX = event.clientX - cartHead.getBoundingClientRect().left;
     offsetY = event.clientY - cartHead.getBoundingClientRect().top;
 
@@ -103,48 +123,35 @@ function handleMouseDown(event) {
     document.addEventListener('mouseup', handleMouseUp);
 }
 
-// Function to handle mouse move event
 function handleMouseMove(event) {
-
     const x = event.clientX - offsetX;
     const y = event.clientY - offsetY;
 
- 
     cartHead.style.left = x + 'px';
     cartHead.style.top = y + 'px';
 }
 
-// Function to handle mouse up event
 function handleMouseUp() {
-
     document.removeEventListener('mousemove', handleMouseMove);
     document.removeEventListener('mouseup', handleMouseUp);
 }
 
-// Function to handle closing the cart
-function handleCloseCart() {
-    cart.style.display = 'none';
-    overlay.style.display = 'none';
- 
-    cart.style.zIndex = '';
-
-    document.body.style.overflow = 'auto';
-}
-
-
 document.getElementById('closeCart').addEventListener('click', handleCloseCart);
 document.querySelector('.close-btn').addEventListener('click', handleCloseCart);
 
-
 cartHead.addEventListener('mousedown', handleMouseDown);
-
 
 cartHead.addEventListener('click', function() {
     toggleCart();
 });
 
+const toggleChat = document.getElementById("toggleChat");
+toggleChat.addEventListener("click", toggleChatbox);
 
-
+const closeChatBtn = document.querySelector(".close-chat-btn");
+closeChatBtn.addEventListener("click", function() {
+    toggleChatbox();
+});
 
 //chatbot form logic
 document.addEventListener("DOMContentLoaded", function() {
@@ -158,16 +165,6 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    function toggleChatbox() {
-        const chatBox = document.getElementById("chatBot");
-        chatBox.style.display = chatBox.style.display === "none" ? "block" : "none";
-        const overlay = document.getElementById("overlay");
-        overlay.style.display = chatBox.style.display === "none" ? "none" : "block";
-        if (chatBox.style.display === "none") {
-            resetForm(); 
-        }
-    }
-
     function handleNext() {
         currentStep++;
         if (currentStep < steps.length) {
@@ -178,6 +175,7 @@ document.addEventListener("DOMContentLoaded", function() {
     function resetForm() {
         form.reset();
         currentStep = 0; 
+        showStep(currentStep);
     }
 
     function showConfirmation() {
@@ -190,14 +188,6 @@ document.addEventListener("DOMContentLoaded", function() {
             resetForm(); 
         });
     }
-
-    const toggleChat = document.getElementById("toggleChat");
-    toggleChat.addEventListener("click", toggleChatbox);
-
-    const closeChatBtn = document.querySelector(".close-chat-btn");
-    closeChatBtn.addEventListener("click", function() {
-        toggleChatbox(); 
-    });
 
     const nextButtons = document.querySelectorAll(".next-btn");
     nextButtons.forEach(button => {
