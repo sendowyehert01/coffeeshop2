@@ -3,7 +3,8 @@ use Core\App;
 use Core\Database;
 $db = App::resolve('Core\Database');
 
-$products = $db->query("SELECT * FROM tblproducts")->get();
+$products = $db->query("SELECT product_name, product_description, price, CONCAT(UCASE(SUBSTRING(category, 1, 1)), LOWER(SUBSTRING(category, 2))) AS category, image FROM tblproducts")->get();
+
 
 ?>
 
@@ -219,8 +220,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
     const submitBtn = document.querySelector(".submit-btn");
     submitBtn.addEventListener("click", function(event) {
-        document.getElementById('chatForm').submit();
         showConfirmation();
+        document.getElementById('chatForm').submit();
+
     });
 
     showStep(currentStep);
@@ -268,17 +270,14 @@ $(document).ready(function() {
 });
 
 
-$(document).ready(function() {
-    $('.category-btn-checkbox').change(function() {
-        if($(this).is(':checked')) {
-            let products = <?= json_encode($products) ?>;
-            console.log(products);
-            if(products[0].category === "Brew"){
-                console.log(this.value);
-                const base_coffee = document.getElementById('base-coffee');
-                console.log(base_coffee);
-            }
-        }
-    });
-});
+// $(document).ready(function() {
+//     $('.category-btn-checkbox').change(function() {
+//         if($(this).is(':checked')) {
+//             let products = <?= json_encode($products) ?>;
+//             if(products[0].category === "Brew"){
+//                 const base_coffee = document.getElementById('base-coffee');
+//             }
+//         }
+//     });
+// });
 </script>

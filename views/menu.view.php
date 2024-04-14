@@ -12,7 +12,7 @@
     .category-btn-label {
         display: inline-block;
         padding: 10px 20px;
-        background-color: #007bff; /* primary button color */
+        background-color: red; /* primary button color */
         color: #fff;
         cursor: pointer;
     }
@@ -20,6 +20,8 @@
     .category-btn-label.selected {
         background-color: #ffffff; /* secondary button color */
     }
+
+
 </style>
     
 
@@ -75,7 +77,6 @@
                             // Loop through the products and display them
                             products.forEach(product => {
                                 const productCard = document.createElement('tr');
-                                console.log(product);
                                 // productCard.className = 'col-lg-4 col-md-6 mb-5';
                                 productCard.innerHTML = `
                                                         <td><a href ="/show_product">${product.product_name}</a></td>
@@ -170,24 +171,21 @@
                 <!-- Step 2: Base Coffee -->
                 <div id="step2" style="display: none;">
                     <p>Select base coffee:</p>
-                    <div class="btn-group" id="base-coffee">
+                    <div class="mb-3">
+                        <div class="btn-group" id="base-coffee">
 
-                        <label id="Cold Brew" for="cold Brew" class="category-btn-label">Cold Brew</label>
-                        <input id="cold Brew" type="checkbox" name="category" class="category-btn-checkbox" value="Cold Brew">
-
-                    </div>
-                    <div class="text-end">
-                        <button type="button" class="next-btn btn btn-primary mt-3">Next</button>
+                        </div>
+                        <div class="text-end">
+                            <button type="button" class="next-btn btn btn-primary mt-3">Next</button>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Step 3: Size -->
                 <div id="step3" style="display: none;">
                     <p>Select Size:</p>
-                    <div class="btn-group">
-                        <button type="button" name="size" class="size-btn btn btn-primary mr-2" value="Small">Small</button>
-                        <button type="button" name="size" class="size-btn btn btn-primary mr-2" value="Medium">Medium</button>
-                        <button type="button" name="size" class="size-btn btn btn-primary mr-2" value="Large">Large</button>
+                    <div class="btn-group" id="size-con">
+
                     </div>
                     <div class="text-end">
                         <button type="button" class="next-btn btn btn-primary mt-3">Next</button>
@@ -197,6 +195,14 @@
                 <!-- Step 4: Customize Coffee -->
                 <div id="step4" style="display: none;">
                     <p>Customize your coffee:</p>
+
+                    <?php
+                        $sql = "SELECT * FROM tblproducts_inventory PI 
+                        JOIN tblInventory I ON PI.inventory_id = I.inventory_id 
+                        WHERE products_id = $products[product_id]";
+                        $currentIngredientsData = $db->query($sql)->get();
+                    ?>
+
                     <div class="row">
                         <div class="col-auto">
                             <label for="ingredient1" class="form-label">Ingredient 1:</label>
@@ -206,54 +212,6 @@
                                 <button class="btn btn-outline-primary" type="button" id="ingredient1-decrement">-</button>
                                 <input type="text" class="form-control text-center" id="ingredient1" value="0">
                                 <button class="btn btn-outline-primary" type="button" id="ingredient1-increment">+</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-auto">
-                            <label for="ingredient2" class="form-label">Ingredient 2:</label>
-                        </div>
-                        <div class="col">
-                            <div class="input-group custom-input-group">
-                                <button class="btn btn-outline-primary" type="button" id="ingredient2-decrement">-</button>
-                                <input type="text" class="form-control text-center" id="ingredient2" value="0">
-                                <button class="btn btn-outline-primary" type="button" id="ingredient2-increment">+</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-auto">
-                            <label for="ingredient3" class="form-label">Ingredient 3:</label>
-                        </div>
-                        <div class="col">
-                            <div class="input-group custom-input-group">
-                                <button class="btn btn-outline-primary" type="button" id="ingredient3-decrement">-</button>
-                                <input type="text" class="form-control text-center" id="ingredient3" value="0">
-                                <button class="btn btn-outline-primary" type="button" id="ingredient3-increment">+</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-auto">
-                            <label for="ingredient4" class="form-label">Ingredient 4:</label>
-                        </div>
-                        <div class="col">
-                            <div class="input-group custom-input-group">
-                                <button class="btn btn-outline-primary" type="button" id="ingredient4-decrement">-</button>
-                                <input type="text" class="form-control text-center" id="ingredient4" value="0">
-                                <button class="btn btn-outline-primary" type="button" id="ingredient4-increment">+</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-auto">
-                            <label for="ingredient5" class="form-label">Ingredient 5:</label>
-                        </div>
-                        <div class="col">
-                            <div class="input-group custom-input-group">
-                                <button class="btn btn-outline-primary" type="button" id="ingredient5-decrement">-</button>
-                                <input type="text" class="form-control text-center" id="ingredient5" value="0">
-                                <button class="btn btn-outline-primary" type="button" id="ingredient5-increment">+</button>
                             </div>
                         </div>
                     </div>
@@ -284,6 +242,106 @@
     <!-- Contact Javascript File -->
     <script src="mail/jqBootstrapValidation.min.js"></script>
     <script src="mail/contact.js"></script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const categoryCheckboxes = document.querySelectorAll('.category-btn-checkbox');
+        const baseCoffeeContainer = document.getElementById('base-coffee');
+
+        const baseCoffeeOptions = <?= json_encode($products) ?>;
+
+        // Function to update base coffee options based on selected categories
+        function updateBaseCoffeeOptions() {
+            const selectedCategories = Array.from(categoryCheckboxes)
+                .filter(checkbox => checkbox.checked)
+                .map(checkbox => checkbox.value);
+
+            // Clear previous options
+            baseCoffeeContainer.innerHTML = '';
+
+            // Populate base coffee options for selected categories
+            const filteredBaseCoffee = baseCoffeeOptions.filter(coffee => {
+                return selectedCategories.includes(coffee.category);
+            });
+
+            filteredBaseCoffee.forEach(coffee => {
+                const label = document.createElement('label');
+                label.textContent = coffee.product_name;
+                label.setAttribute('for', coffee.product_name.toLowerCase().replaceAll(' ', '-'));
+                label.classList.add('category-btn-label');
+                label.id = coffee.product_name.toLowerCase().replaceAll(' ', '_');
+
+                const input = document.createElement('input');
+                input.type = 'checkbox';
+                input.name = 'base_coffee';
+                input.classList.add('category-btn-checkbox');
+                input.value = coffee.product_name.toLowerCase().replaceAll(' ', '_');
+                input.id = coffee.product_name.toLowerCase().replaceAll(' ', '-');
+
+                const div = document.createElement('div');
+                div.classList.add('btn-group');
+                div.appendChild(label);
+                div.appendChild(input);
+
+                baseCoffeeContainer.appendChild(div);
+
+                $('input[name=base_coffee]').change(function() {
+                if ($(this).is(':checked')) {
+                    const amer = document.getElementById(this.value);
+                    amer.classList.add("selected");
+                    $('.category-btn-label').not('#' + this.value).removeClass('selected');
+                }
+                });
+
+            });
+        }
+
+        // Event listener for category checkboxes change
+        categoryCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', updateBaseCoffeeOptions);
+        });
+
+        // Initially update base coffee options
+        updateBaseCoffeeOptions();
+
+        sizes = ["Small", "Medium", "Large"];
+        const baseSizeContainer = document.getElementById('size-con');
+
+        sizes.forEach(size => {
+                const label = document.createElement('label');
+                label.textContent = size;
+                label.setAttribute('for', size);
+                label.classList.add('category-btn-label');
+                label.id = size.toLowerCase();;
+
+                const input = document.createElement('input');
+                input.type = 'checkbox';
+                input.name = 'size';
+                input.classList.add('category-btn-checkbox');
+                input.value = size.toLowerCase();
+                input.id = size;
+
+                const div = document.createElement('div');
+                div.classList.add('btn-group');
+                div.appendChild(label);
+                div.appendChild(input);
+
+                baseSizeContainer.appendChild(div);
+
+                $('input[name=size]').change(function() {
+                if ($(this).is(':checked')) {
+                    const amer = document.getElementById(this.value);
+                    amer.classList.add("selected");
+                    $('.category-btn-label').not('#' + this.value).removeClass('selected');
+                }
+                });
+
+            });
+
+
+    });
+
+</script>
 
 
 <?php require 'partials/foot.php'; ?>
