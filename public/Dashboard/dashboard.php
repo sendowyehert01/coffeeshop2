@@ -81,7 +81,7 @@ $monthlySalesData = $statementMonthlySales->fetchAll(PDO::FETCH_ASSOC);
         }
 
         .chart-container {
-            width: 40%;
+            width: 30%;
             /* width */
             margin: auto;
             /* margin sa chart */

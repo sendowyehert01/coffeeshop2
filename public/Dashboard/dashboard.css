@@ -1,9 +1,9 @@
 :root {
-  --primary-color: #8B4513; /* SaddleBrown for primary elements */
-  --secondary-color: #D2B48C; /* Tan for secondary elements */
-  --background-color: #F5F5DC; /* Beige for the background */
-  --text-color: #4B0082; /* Indigo text color */
-  --button-color: #A52A2A; /* Brown for buttons */
+  --primary-color: #5587c0; 
+  --secondary-color: #222E3C; 
+  --background-color: #F5F5DC; 
+  --text-color: #ffff; 
+  --button-color: #A52A2A; 
 }
 
 body,
@@ -12,7 +12,7 @@ html {
   padding: 0;
   font-family: Arial, sans-serif;
   height: 100%;
-  background-color: var(--background-color);
+  background-color: #F5F7FB;
 }
 
 .dashboard {
@@ -22,20 +22,36 @@ html {
 
 .sidebar {
   width: 250px;
-  background-color: var(--secondary-color); /* Change the background color */
+  background-color: var(--secondary-color); 
   color: var(--text-color);
-  padding: 5px 0;
+  padding: 0;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
   position: fixed;
   height: 100%;
   top: 0;
   left: 0;
   overflow-y: auto;
+  display: flex; 
+  flex-direction: column; 
 }
 
 .sidebar h1 {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
+  position: relative;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.sidebar h1::after {
+  content: '';
+  display: block;
+  width: 50px; 
+  height: 2px; 
+  background-color: var(--primary-color); 
+  position: absolute;
+  bottom: -10px; 
+  left: calc(50% - 25px); 
 }
 
 .sidebar ul {
@@ -45,26 +61,39 @@ html {
 }
 
 .sidebar ul li {
-  margin: 0;
+  margin: 0 !important;
+  padding-top: 10px !important;
 }
 
 .sidebar ul li a {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 15px;
+  padding: 10px;
   color: #F5F5DC;
   text-decoration: none;
-  font-size: 18px;
+  font-size: 16px;
   transition: 0.3s;
 }
 
-.sidebar ul li a:hover {
-  background-color: var(--primary-color);
+.sidebar ul li a i {
+  margin-right: 10px; 
+  transition: 0.3s; 
 }
 
+.sidebar ul li a:hover {
+  background-color: rgba(0, 0, 0, 0.3); 
+}
+
+.sidebar ul li a:hover i {
+  margin-right: 20px; 
+}
+
+
+
+
 .content {
-  background-color: var(--background-color);
+  background-color: #F5F7FB;
   margin-left: 250px;
   padding: 20px;
   width: calc(100% - 250px);

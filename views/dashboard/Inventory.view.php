@@ -453,7 +453,7 @@ if ($statementTotalProducts->rowCount() == 0) {
         }
 
         th {
-            background-color: #4caf50;
+            background-color: #2473c0;
             color: #fff;
         }
 
@@ -468,15 +468,15 @@ if ($statementTotalProducts->rowCount() == 0) {
             border-radius: 5px;
             cursor: pointer;
         }
-
+        
         .button.add-button {
-            background-color: #4CAF50;
+            background-color: #2473c0;
             color: white;
             margin-right: 5px;
         }
 
         .button.edit-button {
-            background-color: #008CBA;
+            background-color: green;
             color: white;
         }
 
@@ -787,26 +787,26 @@ if ($statementTotalProducts->rowCount() == 0) {
             <div>
                 <div class="containertab">
                     <div class="stock-container total-products-container">
-                        <h4>Total Products</h4>
+                        <h4><i class="fa fa-shopping-cart"></i> Total Products</h4>
                         <p>
                             <?php echo $totalProducts; ?>
                         </p>
                     </div>
                     <div class="stock-container low-stock-container">
-                        <h4>Low Stock</h4>
+                        <h4><i class="fa fa-exclamation-triangle"></i> Low Stock</h4>
                         <p>
                             <?php echo !empty($lowStockData) ? $lowStockData[0]['lowStock'] : 0; ?>
                         </p>
                     </div>
 
                     <div class="stock-container out-of-stock-container">
-                        <h4>Out of Stock</h4>
+                        <h4><i class="fa fa-ban"></i> Out of Stock</h4>
                         <p>
                             <?php echo !empty($outOfStockData) ? $outOfStockData[0]['out_of_stock'] : 0; ?>
                         </p>
                     </div>
                     <div class="stock-container most-stock-container">
-                        <h4>Most Stock</h4>
+                        <h4><i class="fa fa-check-circle"></i> Most Stock</h4>
                         <p>
                             <?php echo !empty($mostStockData) ? $mostStockData[0]['most_stock'] : 0; ?>
                         </p>

@@ -1,65 +1,59 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    text-align: center;
-    padding: 20px;
-  }
+body{
+  background-color: antiquewhite;
+}
 
-  .report-btn {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    cursor: pointer;
-    margin-right: 10px;
-  }
+.report-container {
+  display: none;
+}
 
-  .search-filter {
-    display: none;
-    margin-bottom: 10px;
-  }
+.search-filter {
+  margin-bottom: 20px;
+}
 
+.report-table {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.feedback-description {
+  max-height: 40px;
+  overflow: hidden;
+}
+
+.container {
+  border-radius: 10px;
+  box-shadow: 0 7px 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+  padding: 20px;
+  margin-top: 2%;
+  background-color: #ffff;
+}
+
+.report-container {
+  margin-top: 20px;
+}
+
+.btn-primary {
+  background-color: #2473c0; 
+  border-color: #5ba1e7; 
+}
+
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: #0c4881; 
+}
+
+
+@media print {
   .report-container {
-    display: none;
-    margin-top: 20px;
+    display: block !important;
   }
-
-  .report-table {
-    width: 80%;
-    margin: 20px auto;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
-
-  .report-table th,
-  .report-table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-  }
-
-  .report-table th {
-    background-color: #4CAF50;
-    color: white;
-  }
-
   .download-btn {
-    display: block;
-    background-color: #008CBA;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin-top: 10px;
-    cursor: pointer;
+    display: none;
   }
+
+}
 
   .search-filter input,
   .search-filter select {

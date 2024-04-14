@@ -4,7 +4,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #F5F5DC;
+            background-color: #ffff;
         }
 
         table {
@@ -30,6 +30,23 @@
 
         tr:nth-child(even) {
             background-color: #f2f2f2;
+        }
+
+        .info-box {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-top: 5em;
+        }
+
+        .info-box h4 {
+            margin-bottom: 10px;
+        }
+
+        .info-box p {
+            margin: 0;
+            color: #333;
         }
 
         /*edit button style*/
@@ -63,7 +80,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: #ffff;
             /* Semi-transparent background */
             display: none;
             justify-content: center;
@@ -114,7 +131,7 @@
                     <form method="post" action="">
                         <input type="hidden" class="form-control" name="editId" value="<?= $coffeeshop['coffeeshopid'] ?>">
                         <div class="form-group">
-                            <label for="new_product">CoffeeShop Name:</label>
+                            <label for="new_product">Coffee Shop Name:</label>
                             <input type="text" class="form-control" name="editShopName"
                                 value="<?= $coffeeshop['shopname'] ?>" required>
                         </div>
@@ -150,48 +167,31 @@
             <a href="logout.php" class="login-button">Logout</a>
         </div>
         <div class="content">
-            <h2>CoffeeShop Information
+            <h2>Coffee Shop Information
                 <?php echo " (" . $_SESSION['user']['email'] . " the " . $_SESSION['user']['role'] . ") " ?>
             </h2>
             <?php foreach ($coffeeshopData as $coffeeshop): ?>
-                <div class="info-box" style="width:inherit; height:inherit; margin-top:5em;">
-                    <div style="display: flex; justify-content: space-between;">
-                        <button type="button" class="button edit-button" id="editInfo">✎Edit</button>
+                <div class="info-box d-flex flex-column position-relative">
+                    <button type="button" class="btn btn-primary edit-button position-absolute top-0 end-0 m-3" id="editInfo">✎ Edit</button>
+                    <div class="info-item">
+                        <h4><b>CoffeeShop Name:</b></h4>
+                        <p><?php echo $coffeeshop['shopname']; ?></p>
                     </div>
-                    <div>
-                        <h4><b>CoffeeShop Name:</b>
-                            <p style="color:#333; display: inline;">
-                                <?php echo $coffeeshop['shopname']; ?>
-                            </p>
-                        </h4>
+                    <div class="info-item">
+                        <h4><b>Branch:</b></h4>
+                        <p><?php echo $coffeeshop['branch']; ?></p>
                     </div>
-                    <div>
-                        <h4><b>Branch:</b>
-                            <p style="color:#333; display: inline;">
-                                <?php echo $coffeeshop['branch']; ?>
-                            </p>
-                        </h4>
+                    <div class="info-item">
+                        <h4><b>Address:</b></h4>
+                        <p><?php echo $coffeeshop['address']; ?></p>
                     </div>
-                    <div>
-                        <h4><b>Address:</b>
-                            <p style="color:#333; display: inline;">
-                                <?php echo $coffeeshop['address']; ?>
-                            </p>
-                        </h4>
+                    <div class="info-item">
+                        <h4><b>Contact Number:</b></h4>
+                        <p><?php echo $coffeeshop['contact_no']; ?></p>
                     </div>
-                    <div>
-                        <h4><b>Contact Number:</b>
-                            <p style="color:#333; display: inline;">
-                                <?php echo $coffeeshop['contact_no']; ?>
-                            </p>
-                        </h4>
-                    </div>
-                    <div>
-                        <h4><b>Email:</b>
-                            <p style="color:#333; display: inline;">
-                                <?php echo $coffeeshop['email']; ?>
-                            </p>
-                        </h4>
+                    <div class="info-item">
+                        <h4><b>Email:</b></h4>
+                        <p><?php echo $coffeeshop['email']; ?></p>
                     </div>
                 </div>
             <?php endforeach; ?>
