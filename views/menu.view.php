@@ -188,22 +188,18 @@
 
                     </div>
                     <div class="text-end">
-                        <button type="button" class="next-btn btn btn-primary mt-3">Next</button>
+                        <!-- <button type="button" class="next-btn btn btn-primary mt-3">Next</button> -->
+                        <button type="submit" class="submit-btn btn btn-primary mt-3">Submit</button>
                     </div>
+
                 </div>
 
                 <!-- Step 4: Customize Coffee -->
-                <div id="step4" style="display: none;">
+                <!-- <div id="step4" style="display: none;">
                     <p>Customize your coffee:</p>
 
-                    <?php
-                        $sql = "SELECT * FROM tblproducts_inventory PI 
-                        JOIN tblInventory I ON PI.inventory_id = I.inventory_id 
-                        WHERE products_id = $products[product_id]";
-                        $currentIngredientsData = $db->query($sql)->get();
-                    ?>
+                    <div class="row" id="prod_ingredients">
 
-                    <div class="row">
                         <div class="col-auto">
                             <label for="ingredient1" class="form-label">Ingredient 1:</label>
                         </div>
@@ -214,9 +210,11 @@
                                 <button class="btn btn-outline-primary" type="button" id="ingredient1-increment">+</button>
                             </div>
                         </div>
+
                     </div>
+
                     <button type="submit" class="submit-btn btn btn-primary mt-3">Submit</button>
-                </div>
+                </div> -->
             </form>
         </div>
     </div>
@@ -237,7 +235,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
      <!-- Template Javascript -->
-     <?php require "js/main.php"; ?>
+    <?php require "js/main.php"; ?>
 
     <!-- Contact Javascript File -->
     <script src="mail/jqBootstrapValidation.min.js"></script>
@@ -247,6 +245,7 @@
     document.addEventListener('DOMContentLoaded', function () {
         const categoryCheckboxes = document.querySelectorAll('.category-btn-checkbox');
         const baseCoffeeContainer = document.getElementById('base-coffee');
+        const ingredientsContainer = document.getElementById('prod_ingredients');
 
         const baseCoffeeOptions = <?= json_encode($products) ?>;
 
@@ -278,22 +277,36 @@
                 input.value = coffee.product_name.toLowerCase().replaceAll(' ', '_');
                 input.id = coffee.product_name.toLowerCase().replaceAll(' ', '-');
 
+                const input1 = document.createElement('input');
+                input1.type = 'hidden';
+                input1.name = 'base_coffee_id';
+                input1.value = coffee.product_id;
+                input1.id = coffee.product_id;
+
+                const input2 = document.createElement('input');
+                input2.type = 'hidden';
+                input2.name = 'order_type';
+                input2.value = "take-out";
+                input2.id = coffee.product_id;
+
                 const div = document.createElement('div');
                 div.classList.add('btn-group');
                 div.appendChild(label);
                 div.appendChild(input);
+                div.appendChild(input1);
+                div.appendChild(input2);
 
                 baseCoffeeContainer.appendChild(div);
 
-                $('input[name=base_coffee]').change(function() {
+            });
+
+            $('input[name=base_coffee]').change(function() {
                 if ($(this).is(':checked')) {
                     const amer = document.getElementById(this.value);
                     amer.classList.add("selected");
                     $('.category-btn-label').not('#' + this.value).removeClass('selected');
                 }
                 });
-
-            });
         }
 
         // Event listener for category checkboxes change
@@ -337,8 +350,6 @@
                 });
 
             });
-
-
     });
 
 </script>

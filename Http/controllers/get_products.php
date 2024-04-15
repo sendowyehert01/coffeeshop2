@@ -3,7 +3,7 @@ use Core\App;
 use Core\Database;
 $db = App::resolve('Core\Database');
 
-$sql = "SELECT product_name, product_description, price, CONCAT(UCASE(SUBSTRING(category, 1, 1)), LOWER(SUBSTRING(category, 2))) AS category, image FROM tblproducts";
+$sql = "SELECT product_id, product_name, product_description, price, CONCAT(UCASE(SUBSTRING(category, 1, 1)), LOWER(SUBSTRING(category, 2))) AS category, image FROM tblproducts";
 
 $result = $db->query($sql)->get();
 

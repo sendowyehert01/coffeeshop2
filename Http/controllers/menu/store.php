@@ -5,34 +5,27 @@ use Core\Database;
 use Core\Validator;
 $db = App::resolve('Core\Database');
 
-dd($_POST);
-
-$feedback = $db->query("SELECT * FROM tblfeedback JOIN tbluser ON id = customerid")->get();
-
 $errors = [];
 
-  if (! Validator::string($_POST['title'], 1 , 30)) {
-    $errors['body'] = "A body of no more than 30 characters is required.";
-  }
+  // if (! Validator::checkbox($_POST['category'])) {
+  //   $errors['body'] = "Category is required";
+  // }
 
-  if (! Validator::string($_POST['feedback_desc'], 1 , 50)) {
-    $errors['body'] = "A body of no more than 50 characters is required.";
-  }
+  // if (! Validator::string($_POST['feedback_desc'], 1 , 50)) {
+  //   $errors['body'] = "A body of no more than 50 characters is required.";
+  // }
 
-  if (! empty($errors)) {
-    return view('testimonial.view.php', [
-      'errors' => $errors,
-      'feedback' => $feedback,
-    ]);
-  }
+  // if (! empty($errors)) {
+  //   return view('menu.view.php', [
+  //     'errors' => $errors,
+  //   ]);
+  // }
+
+  // dd($_POST);
 
   if (empty($errors)) {
-    $db->query("INSERT INTO tblfeedback(title, feedback_desc, customerid) VALUES(:title, :feedback_desc, :customerid)", ['title'=> $_POST['title'],'feedback_desc'=> $_POST['feedback_desc'],'customerid' => $_SESSION['user']['id']]);
+      $db->query("INSERT INTO tblorders(order_type, customer_id) VALUES(:order_type, :customer_id)", ['order_type'=> $_POST['order_type'],'customer_id' => $_SESSION['user']['id']]);
   }
 
-  header('location: /testimonial');
+  header('location: /menu');
   die();
-
-// view('testimonial.view.php', [
-//   'feedback' => $feedback,
-// ]);

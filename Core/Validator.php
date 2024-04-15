@@ -16,6 +16,13 @@ class Validator {
     return filter_var($value, FILTER_VALIDATE_EMAIL);
   }
 
+  public static function checkbox($value)
+  {
+    if (isset($value)) {
+      return true;
+    } 
+  }
+
 }
 
 ?>
