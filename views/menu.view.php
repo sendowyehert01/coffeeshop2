@@ -21,6 +21,55 @@
         background-color: #ffffff; /* secondary button color */
     }
 
+/* Mark input boxes that gets an error on validation: */
+input.invalid {
+  background-color: #ffdddd;
+}
+
+/* Hide all steps by default: */
+.tab {
+  display: none;
+}
+
+button {
+  background-color: #04AA6D;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 17px;
+  font-family: Raleway;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+#prevBtn {
+  background-color: #bbbbbb;
+}
+
+/* Make circles that indicate the steps of the form: */
+.step {
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbbbbb;
+  border: none;  
+  border-radius: 50%;
+  display: inline-block;
+  opacity: 0.5;
+}
+
+.step.active {
+  opacity: 1;
+}
+
+/* Mark the steps that are finished and valid: */
+.step.finish {
+  background-color: #04AA6D;
+}
+
 
 </style>
     
@@ -140,81 +189,48 @@
         </div>
         <div class="chat-body p-3" id="chatBody">
             <form id="chatForm" action="/menu" method="POST">
-                <!-- Step 1: Coffee Category -->
-                <div id="step1">
-                    <p>Select your coffee category:</p>
-                    <div class="mb-3">
+                <h1>Register:</h1>
+                <!-- One "tab" for each step in the form: -->
+                <div class="tab">
 
-                        <label id="Americano" for="americano" class="category-btn-label">Americano</label>
-                        <input id="americano" type="checkbox" name="category" class="category-btn-checkbox" value="Americano">
+                    <label id="Americano" for="americano" class="category-btn-label">Americano</label>
+                    <input id="americano" type="radio" name="category" class="category-btn-checkbox" value="Americano">
+
+                    <label id="Brewed" for="brewed" class="category-btn-label">Brewed</label>
+                    <input id="brewed" type="radio" name="category" class="category-btn-checkbox" value="Brewed">
                         
-                        <label id="Brewed" for="brewed" class="category-btn-label">Brewed</label>
-                        <input id="brewed" type="checkbox" name="category" class="category-btn-checkbox" value="Brewed">
-                        
-                        <label id="Capuccino" for="capuccino" class="category-btn-label">Capuccino</label>
-                        <input id="capuccino" type="checkbox" name="category" class="category-btn-checkbox" value="Capuccino">
+                    <label id="Capuccino" for="capuccino" class="category-btn-label">Capuccino</label>
+                    <input id="capuccino" type="radio" name="category" class="category-btn-checkbox" value="Capuccino">
 
-                        <label id="Espresso" for="espresso" class="category-btn-label">Espresso</label>
-                        <input id="espresso" type="checkbox" name="category" class="category-btn-checkbox" value="Espresso">
+                    <label id="Espresso" for="espresso" class="category-btn-label">Espresso</label>
+                    <input id="espresso" type="radio" name="category" class="category-btn-checkbox" value="Espresso">
 
-                        <label id="Frappe" for="frappe" class="category-btn-label">Frappe</label>
-                        <input id="frappe" type="checkbox" name="category" class="category-btn-checkbox" value="Frappe">
+                    <label id="Frappe" for="frappe" class="category-btn-label">Frappe</label>
+                    <input id="frappe" type="radio" name="category" class="category-btn-checkbox" value="Frappe">
 
-                        <label id="Latte" for="latte" class="category-btn-label">Latte</label>
-                        <input id="latte" type="checkbox" name="category" class="category-btn-checkbox" value="Latte">
-
-                    </div>
-                    <div class="text-end">
-                        <button type="button" class="next-btn btn btn-primary">Next</button>
-                    </div>
-                </div>
-                <!-- Step 2: Base Coffee -->
-                <div id="step2" style="display: none;">
-                    <p>Select base coffee:</p>
-                    <div class="mb-3">
-                        <div class="btn-group" id="base-coffee">
-
-                        </div>
-                        <div class="text-end">
-                            <button type="button" class="next-btn btn btn-primary mt-3">Next</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Step 3: Size -->
-                <div id="step3" style="display: none;">
-                    <p>Select Size:</p>
-                    <div class="btn-group" id="size-con">
-
-                    </div>
-                    <div class="text-end">
-                        <!-- <button type="button" class="next-btn btn btn-primary mt-3">Next</button> -->
-                        <button type="submit" class="submit-btn btn btn-primary mt-3">Submit</button>
-                    </div>
+                    <label id="Latte" for="latte" class="category-btn-label">Latte</label>
+                    <input id="latte" type="radio" name="category" class="category-btn-checkbox" value="Latte">
 
                 </div>
-
-                <!-- Step 4: Customize Coffee -->
-                <!-- <div id="step4" style="display: none;">
-                    <p>Customize your coffee:</p>
-
-                    <div class="row" id="prod_ingredients">
-
-                        <div class="col-auto">
-                            <label for="ingredient1" class="form-label">Ingredient 1:</label>
-                        </div>
-                        <div class="col">
-                            <div class="input-group custom-input-group">
-                                <button class="btn btn-outline-primary" type="button" id="ingredient1-decrement">-</button>
-                                <input type="text" class="form-control text-center" id="ingredient1" value="0">
-                                <button class="btn btn-outline-primary" type="button" id="ingredient1-increment">+</button>
-                            </div>
-                        </div>
-
+                <div class="tab" id="base-coffee">
+                    <!-- Coffee Base -->
+                </div>
+                <div class="tab" id="size-con">
+                    <!-- Sizes -->
+                </div>
+                <div style="overflow:auto;">
+                    <div style="float:right;">
+                    <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+                    <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
                     </div>
-
-                    <button type="submit" class="submit-btn btn btn-primary mt-3">Submit</button>
-                </div> -->
+                </div>
+                <!-- Circles which indicates the steps of the form: -->
+                <div style="text-align:center;margin-top:40px;">
+                    <span class="step"></span>
+                    <span class="step"></span>
+                    <span class="step"></span>
+                    <span class="step"></span>
+                </div>
             </form>
         </div>
     </div>
@@ -271,7 +287,7 @@
                 label.id = coffee.product_name.toLowerCase().replaceAll(' ', '_');
 
                 const input = document.createElement('input');
-                input.type = 'checkbox';
+                input.type = 'radio';
                 input.name = 'base_coffee';
                 input.classList.add('category-btn-checkbox');
                 input.value = coffee.product_name.toLowerCase().replaceAll(' ', '_');
@@ -279,14 +295,14 @@
 
                 const input1 = document.createElement('input');
                 input1.type = 'hidden';
-                input1.name = 'base_coffee_id';
-                input1.value = coffee.product_id;
+                input1.name = 'order_type';
+                input1.value = "take-out";
                 input1.id = coffee.product_id;
 
                 const input2 = document.createElement('input');
                 input2.type = 'hidden';
-                input2.name = 'order_type';
-                input2.value = "take-out";
+                input2.name = 'base_coffee_id';
+                input2.value = coffee.product_id;
                 input2.id = coffee.product_id;
 
                 const div = document.createElement('div');
@@ -297,7 +313,6 @@
                 div.appendChild(input2);
 
                 baseCoffeeContainer.appendChild(div);
-
             });
 
             $('input[name=base_coffee]').change(function() {
@@ -328,7 +343,7 @@
                 label.id = size.toLowerCase();;
 
                 const input = document.createElement('input');
-                input.type = 'checkbox';
+                input.type = 'radio';
                 input.name = 'size';
                 input.classList.add('category-btn-checkbox');
                 input.value = size.toLowerCase();
